@@ -1,0 +1,142 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #07070a;
+  --color-ink-2: #0d0d12;
+  --color-ink-3: #15151c;
+  --color-line: rgba(255, 255, 255, 0.08);
+  --color-bone: #ece6da;
+  --color-mute: #8d8a84;
+  --color-ember: #e8a25a;
+  --color-ember-2: #ff7a3d;
+  --color-teal: #3fb6b2;
+  --font-display: var(--font-serif), "Times New Roman", serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+}
+
+html {
+  background: var(--color-ink);
+  color: var(--color-bone);
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background: var(--color-ink);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-ember);
+  color: var(--color-ink);
+}
+
+/* Film grain overlay */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-size: 220px 220px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  opacity: 0.07;
+  animation: grain 0.9s steps(6) infinite;
+  z-index: 40;
+}
+
+@keyframes grain {
+  0% { background-position: 0 0; }
+  20% { background-position: -37px 21px; }
+  40% { background-position: 44px -63px; }
+  60% { background-position: -18px -29px; }
+  80% { background-position: 71px 52px; }
+  100% { background-position: 0 0; }
+}
+
+/* Opening title sequence */
+@keyframes letterbox {
+  from { height: 50%; }
+  to { height: var(--bar, 11vh); }
+}
+@keyframes credit {
+  0% { opacity: 0; filter: blur(8px); letter-spacing: 0.6em; }
+  35% { opacity: 1; filter: blur(0); }
+  100% { opacity: 1; filter: blur(0); letter-spacing: 0.35em; }
+}
+@keyframes creditOut {
+  0% { opacity: 0; filter: blur(6px); }
+  25%, 70% { opacity: 1; filter: blur(0); }
+  100% { opacity: 0; filter: blur(6px); }
+}
+@keyframes title {
+  0% { opacity: 0; letter-spacing: 0.5em; filter: blur(14px); }
+  100% { opacity: 1; letter-spacing: 0.04em; filter: blur(0); }
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes kenburns {
+  from { transform: scale(1.12) translate3d(1%, 1%, 0); }
+  to { transform: scale(1.0) translate3d(0, 0, 0); }
+}
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  42% { opacity: 0.94; }
+  44% { opacity: 1; }
+  71% { opacity: 0.97; }
+}
+@keyframes sweep {
+  0% { transform: translateX(-120%) skewX(-18deg); opacity: 0; }
+  20% { opacity: 0.7; }
+  100% { transform: translateX(220%) skewX(-18deg); opacity: 0; }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.anim-letterbox { animation: letterbox 2.2s cubic-bezier(0.7, 0, 0.2, 1) 0.2s both; }
+.anim-credit-1 { animation: creditOut 2.6s ease 0.6s both; }
+.anim-title { animation: title 2.8s cubic-bezier(0.2, 0.7, 0.1, 1) 2.6s both; }
+.anim-rise-1 { animation: rise 1.2s ease 4.4s both; }
+.anim-rise-2 { animation: rise 1.2s ease 4.8s both; }
+.anim-rise-3 { animation: rise 1.2s ease 5.2s both; }
+.anim-kenburns { animation: kenburns 22s ease-out both, flicker 6s linear infinite; }
+.anim-sweep { animation: sweep 3.4s ease-in-out 3s both; }
+.anim-fade { animation: fadeIn 3s ease 0.4s both; }
+.anim-marquee { animation: marquee 40s linear infinite; }
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 1s ease, transform 1s cubic-bezier(0.2, 0.7, 0.1, 1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.vignette {
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(0, 0, 0, 0.85) 100%);
+}
+
+details > summary { list-style: none; }
+details > summary::-webkit-details-marker { display: none; }
+details[open] .faq-icon { transform: rotate(45deg); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+}
