@@ -1,0 +1,57 @@
+{
+  "skill_name": "premium-site",
+  "evals": [
+    {
+      "id": 1,
+      "name": "cinematic-dark-hero",
+      "prompt": "I'm launching Nocturne, an AI color-grading tool for indie filmmakers. Build me a cinematic, dark marketing site \u2014 the hero should feel like the opening titles of a film. Sections: hero, how it works (3 steps), a showcase of looks/grades, a couple of stats about render speed, testimonials from filmmakers, pricing (Free / Pro $24/mo / Studio $79/mo), FAQ, and a waitlist signup CTA. Next.js + Tailwind, ready to deploy on Vercel.",
+      "expected_output": "A build-clean Next.js site with a dark cinematic art direction (display serif, single accent, generative or imagery hero), staggered masked hero entrance, spring hovers, scroll reveals, reduced-motion support, a stat visualisation, and a scroll-linked polish layer.",
+      "files": [],
+      "assertions": [
+        "next build succeeds",
+        "eslint reports 0 errors",
+        "Animation uses Motion (motion/react)",
+        "Reduced motion explicitly handled in authored code",
+        "Uses Kokonut UI animated components",
+        "Uses Bklit UI charts",
+        "Distinct display + text fonts via next/font",
+        "A chromatic accent token is defined (--brand/--accent/--primary)",
+        "No layout-property animation (width/height/top/left/margin)",
+        "Staggered entrance choreography",
+        "Spring-based hover interactions",
+        "Scroll-linked motion layer present",
+        "No lorem ipsum placeholder copy",
+        "Mobile (390px): no horizontal overflow",
+        "No runtime/console errors",
+        "Reduced motion: all text visible after scrolling",
+        "Hero headline is large display type (>= 64px on desktop)"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "bold-product-landing",
+      "prompt": "Make a bold, high-energy landing page for Relay \u2014 API monitoring for small dev teams (alerts in under 10 seconds, p95 latency dashboards, public status pages). It should feel loud and confident, not another bland SaaS page: big type, one strong color. Include charts showing latency improvement and uptime, a feature grid, an integrations logo strip, pricing, and a final signup CTA. Next.js + Tailwind, ready to ship on Vercel.",
+      "expected_output": "A build-clean Next.js landing page with loud display type, one strong accent, Bklit charts for latency/uptime revealed in view, Kokonut animated components, a bento feature grid, staggered reveals, spring hovers, reduced-motion support, and scroll polish.",
+      "files": [],
+      "assertions": [
+        "next build succeeds",
+        "eslint reports 0 errors",
+        "Animation uses Motion (motion/react)",
+        "Reduced motion explicitly handled in authored code",
+        "Uses Kokonut UI animated components",
+        "Uses Bklit UI charts",
+        "Distinct display + text fonts via next/font",
+        "A chromatic accent token is defined (--brand/--accent/--primary)",
+        "No layout-property animation (width/height/top/left/margin)",
+        "Staggered entrance choreography",
+        "Spring-based hover interactions",
+        "Scroll-linked motion layer present",
+        "No lorem ipsum placeholder copy",
+        "Mobile (390px): no horizontal overflow",
+        "No runtime/console errors",
+        "Reduced motion: all text visible after scrolling",
+        "Hero headline is large display type (>= 64px on desktop)"
+      ]
+    }
+  ]
+}
