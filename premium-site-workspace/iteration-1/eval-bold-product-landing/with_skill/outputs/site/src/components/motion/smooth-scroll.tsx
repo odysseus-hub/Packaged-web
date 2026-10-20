@@ -1,0 +1,26 @@
+"use client";
+
+// Inertial smooth scroll for the flowy handoff — Lenis driven by Motion's own frame loop, so
+// there is exactly ONE animation clock on the page and useScroll() reads this frame's position.
+// Skipped entirely under reduced motion and on touch devices (native momentum is better there).
+// Requires: npm i lenis   and   import "lenis/dist/lenis.css" in app/layout.tsx.
+import Lenis from "lenis";
+import { cancelFrame, frame } from "motion/react";
+import { useEffect } from "react";
+
+export function SmoothScroll() {
+  useEffect(() => {
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const coarse = window.matchMedia("(pointer: coarse)").matches;
+    if (reduce || coarse) return;
+
+    const lenis = new Lenis({ autoRaf: false, lerp: 0.1, anchors: true });
+    const update = ({ timestamp }: { timestamp: number }) => lenis.raf(timestamp);
+    frame.setup(update, true);
+    return () => {
+      cancelFrame(update);
+      lenis.destroy();
+    };
+  }, []);
+  return null;
+}

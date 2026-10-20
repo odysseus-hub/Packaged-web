@@ -1,0 +1,57 @@
+• create-next-app
+npm warn deprecated eslint@9.39.5: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+• shadcn init (base-nova preset)
+- Preflight checks.
+√ Preflight checks.
+- Verifying framework.
+√ Verifying framework. Found Next.js.
+- Validating Tailwind CSS. Found v4.
+√ Validating Tailwind CSS. Found v4.
+- Validating import alias.
+√ Validating import alias.
+- Writing components.json.
+√ Writing components.json.
+- Checking registry.
+√ Checking registry.
+- Installing dependencies.
+- Installing dependencies.
+√ Installing dependencies.
+- Updating fonts.
+√ Updating fonts.
+- Updating files.
+√ Created 2 files:
+- Updating src/app/globals.css
+√ Updating src/app/globals.css
+• registries → components.json
+• motion
+• kokonut utils
+- Checking registry.
+√ Checking registry.
+- Installing dependencies.
+- Installing dependencies.
+√ Installing dependencies.
+- Updating files.
+i Updated 1 file:
+• kokonut: particle-button notification-stack uptime-card
+- Checking registry.
+√ Checking registry.
+- Updating files.
+√ Created 3 files:
+i Skipped 1 file: (files might be identical, use --overwrite to overwrite)
+• bklit: area-chart bar-chart ring-chart
+- Checking registry.
+√ Checking registry.
+- Installing dependencies.
+- Installing dependencies.
+√ Installing dependencies.
+- Updating files.
+√ Created 90 files:
+i Skipped 1 file: (files might be identical, use --overwrite to overwrite)
+- Updating src/app/globals.css
+√ Updating src/app/globals.css
+  patched: var(---- → var(-- in ./src/app/globals.css
+  patched: shimmering-text import in ./src/components/charts/chart-loading-label.tsx
+• motion primitives → src/components/motion/
+cp: warning: behavior of -n is non-portable and may change in future; use --update=none instead
+• dark: added class="dark" to <html>
+✓ scaffolded site — next: fonts + tokens + <MotionProvider> in layout (references/art-direction.md §6)
