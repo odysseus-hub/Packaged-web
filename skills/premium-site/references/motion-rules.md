@@ -63,6 +63,8 @@ designed.
 
 **Sections**: one `Stagger` per section, ordered by reading order (heading, then body, then
 items). Stagger groups, not every element: the whole section is one gesture.
+`StaggerItem` renders a `div`. Inside a `<ul>`/`<ol>`, use
+`<motion.li variants={itemVariants}>` (exported from `reveal.tsx`) to keep the markup valid.
 
 **Overlap**: start each group before the previous one finishes (delays around 60–70% of the
 previous duration). Waiting for each step to end feels like a slideshow.
@@ -105,7 +107,10 @@ travel. Then:
 - **Custom loops** (your own `requestAnimationFrame`, `useAnimationFrame`, CSS `@keyframes`
   marquees and floats): gate them with `useReducedMotion()` or
   `@media (prefers-reduced-motion: reduce) { animation: none }`.
-- **CountUp** renders the final value immediately.
+- **CountUp** renders the final value immediately. It uses the hydration-safe
+  `usePrefersReducedMotion()`. Do the same anywhere reduced motion changes *rendered output*.
+  For scroll-linked values, keep the same element and style object, and map the motion values
+  to their resting state (`y: 0`, `opacity: 1`) instead of dropping the `style` prop.
 - **Bklit**: pass `animationDuration={reduce ? 0 : 1100}` to charts.
 - **Kokonut** canvas backgrounds and physics components already check
   `prefers-reduced-motion`. Don't override that.

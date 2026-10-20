@@ -60,14 +60,27 @@ bash <skill>/scripts/scaffold.sh <dir> [--dark] \
 ```
 
 The script runs create-next-app, `shadcn init`, adds the `@kokonutui` and `@bklit`
-registries, installs `motion`, patches two Bklit install bugs (`scripts/patch_registry.sh`),
-and copies the Motion primitives from `assets/motion/` into `src/components/motion/`.
+registries, and installs `motion`. It also:
+
+- patches the known Bklit install bugs (`scripts/patch_registry.sh`)
+- copies the Motion primitives from `assets/motion/` into `src/components/motion/`
+- makes eslint lenient on vendored registry code; your own code stays strict
+- maps the theme's font variables to role names (`--font-display` / `--font-sans` /
+  `--font-mono`)
+- replaces the stock layout with `assets/templates/layout.tsx`: role-named `next/font` setup
+  plus `<MotionProvider>`
 Re-run `patch_registry.sh` after any later `shadcn add @bklit/*`. If you'd rather run the
 commands by hand, or something fails, read `references/stack-setup.md`, which has the
 commands, versions and every known gotcha.
 
-Then wire the layout: load the display and text fonts, set the `--brand` tokens, and wrap
-`{children}` in `<MotionProvider>`. `references/art-direction.md` §6 has copy-ready code.
+Then make it yours:
+
+- swap the three fonts in `layout.tsx` for the art direction's pairing, keeping the variable
+  names
+- set the `--brand` tokens in `globals.css`
+- replace the metadata TODOs
+
+`references/art-direction.md` §6 has copy-ready code.
 
 ### 3. Map sections to components
 
@@ -102,6 +115,11 @@ Read `references/motion-rules.md` before writing animation code. In short:
 - **Reduced motion is part of the design.** `MotionConfig reducedMotion="user"` covers
   transforms. Gate custom loops and CSS keyframes yourself. Content never depends on an
   animation finishing.
+- **Keep reduced motion hydration-safe.** When the preference changes *rendered output*
+  (text, which element renders, inline style objects), read it with
+  `usePrefersReducedMotion()` from the primitives. Better still, keep the markup identical and
+  resolve motion values to their resting state. Motion's `useReducedMotion()` is fine for
+  choosing animation targets, but branching markup on it causes React hydration error #418.
 - **Only transform and opacity animate.** Never width, height, top, left or margin.
 
 ### 5. Hand off scroll-linked polish to flowy
@@ -122,9 +140,15 @@ good entrances beats a half-wired parallax.
 
 ```bash
 python3 <skill>/scripts/check_site.py <dir>         # static audit: a11y, tokens, registry bugs
-cd <dir> && npx eslint && npx next build             # must be clean
-npx next start -p 3000 & node <skill>/scripts/screenshot.mjs http://localhost:3000 ./shots
+(cd <dir> && npx eslint && npx next build)           # must be clean
+node <skill>/scripts/screenshot.mjs <dir> <dir>/../shots   # serves the build itself, then stops it
 ```
+
+`screenshot.mjs` reports console errors, hydration errors and horizontal overflow. Treat any
+of those as a failure. If you start a server yourself, run `./node_modules/.bin/next start`
+directly and stop it by that PID. Killing an `npx next start` wrapper leaves the real
+server running. Never `pkill` by name: other projects on the machine may be running their
+own servers.
 
 **Look at the screenshots.** This step matters more than any other check. Review
 desktop-hero, mobile-full and desktop-reduced-full. Ask: is the concept obvious in the first

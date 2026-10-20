@@ -33,8 +33,11 @@ npx shadcn@latest add @kokonutui/background-paths @kokonutui/particle-button -y
 npx shadcn@latest add @bklit/area-chart @bklit/bar-chart -y
 npx shadcn@latest add accordion card badge tabs -y      # plain shadcn primitives as needed
 
-# 7. Patch Bklit (see gotchas 2 & 3), and re-run after every @bklit add
+# 7. Patch Bklit (gotchas 2, 3 & 7), and re-run after every @bklit add
 bash <skill>/scripts/patch_registry.sh .
+
+# 8. eslint override for vendored code (gotcha 8), font var mapping (gotcha 5), layout
+#    template — see scaffold.sh for the exact edits.
 ```
 
 Where things land:
@@ -59,15 +62,36 @@ Where things land:
 4. **Kokonut and shadcn use class-based dark mode** (`@custom-variant dark (&:is(.dark *))`).
    For a dark site, put `className="dark …"` on `<html>`. The OS media query won't flip
    them.
-5. **`--font-sans: var(--font-sans)` is self-referential** in the `@theme inline` that shadcn
-   generates. It only resolves if `<html>` carries a `next/font` variable named `--font-sans`.
-   Name your text font's variable `--font-sans` and your display font's `--font-display`, then add
-   `--font-display: var(--font-display);` to `@theme inline` so `font-display` works as a utility.
+5. **Font variables don't line up.** shadcn's `@theme inline` has
+   `--font-sans: var(--font-sans)`, which refers to itself and only resolves if `<html>` carries
+   a `next/font` variable named `--font-sans`. It also has `--font-mono: var(--font-geist-mono)`
+   and `--font-heading: var(--font-sans)`. Meanwhile create-next-app's layout emits
+   `--font-geist-sans` and `--font-geist-mono`. Without a fix, headings silently fall back to
+   Times New Roman. `scaffold.sh` maps the theme to role names (`--font-display`,
+   `--font-sans`, `--font-mono`) and installs `assets/templates/layout.tsx`, which defines all
+   three.
 6. **Next 16 defaults**: `next.config.ts` ships with `cacheComponents: true` and
    `partialPrefetching: true`. Pages that are all client components still prerender static. Keep
    `page.tsx` a server component that composes client sections. That keeps the HTML static and
    the JS split.
-7. **Remote images** need `images.remotePatterns` in `next.config.ts` (e.g. `images.unsplash.com`).
+7. **Bklit `bar.tsx` draws negative heights.** While the y-domain tweens, zero-value bars
+   compute `innerHeight - valuePos < 0`, which logs "negative height" `<rect>` console
+   errors. `patch_registry.sh` clamps it with `Math.max(0, …)`.
+8. **eslint-config-next 16 fails vendored registry code.** Its React-Compiler hook rules
+   (`react-hooks/refs`, `set-state-in-effect`, `purity`, `immutability`) report 30–60 errors in
+   freshly installed Bklit and Kokonut source. `scaffold.sh` adds a `files:` override that turns
+   those rules off for `components/{charts,kokonutui,ui}/**` only. Your own code stays strict;
+   don't silence errors there.
+9. **Stopping servers.** `npx next start &` followed by `kill $!` kills only the npx wrapper,
+    and the real `next-server` keeps running. Use `screenshot.mjs <site-dir>` (it serves and
+    stops its own build), or start `./node_modules/.bin/next start` directly and kill that PID.
+    Never `pkill -f next`: it kills other projects' servers on a shared machine.
+10. **Hydration and reduced motion.** Motion's `useReducedMotion()` returns the real preference
+    on the first client render, but the server rendered `null`. Branching *markup* on it (text,
+    conditional elements, `style={reduce ? undefined : {...}}`) triggers React error #418. Use
+    `usePrefersReducedMotion()` (in `assets/motion/`, built on `useSyncExternalStore`) for
+    render-affecting branches, or keep the markup identical and change only the motion values.
+11. **Remote images** need `images.remotePatterns` in `next.config.ts` (e.g. `images.unsplash.com`).
    Prefer local files in `public/` for hero imagery: they're faster, and no outside host can
    break your hero.
 

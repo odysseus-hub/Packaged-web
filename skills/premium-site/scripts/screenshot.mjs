@@ -1,17 +1,48 @@
 // Capture the running site the way a reviewer sees it: desktop + mobile, full page, plus a
 // reduced-motion pass. Scrolls the page first so whileInView reveals have fired.
 //
-// Usage: node screenshot.mjs <url> <out-dir>
-//   e.g. node screenshot.mjs http://localhost:3000 ./shots
+// Usage: node screenshot.mjs <site-dir | url> <out-dir>
+//   node screenshot.mjs ./my-site ./shots           ← preferred: builds must exist (next build);
+//                                                     starts `next start` on a free port and
+//                                                     stops exactly that server afterwards
+//   node screenshot.mjs http://localhost:3000 ./shots   (a server you manage yourself)
 // Needs playwright (global install or project dep). In Claude cloud containers Chromium is at
 // /opt/pw-browsers and PLAYWRIGHT_BROWSERS_PATH is already set — do not run `playwright install`.
-import { mkdirSync } from "node:fs";
+import { existsSync, mkdirSync, statSync } from "node:fs";
 import { createRequire } from "node:module";
-import { execSync } from "node:child_process";
+import { execSync, spawn } from "node:child_process";
+import { createServer } from "node:net";
 import path from "node:path";
 
-const [url = "http://localhost:3000", out = "./shots"] = process.argv.slice(2);
+const [target = "http://localhost:3000", out = "./shots"] = process.argv.slice(2);
 mkdirSync(out, { recursive: true });
+
+// Self-serve mode: never leave a stray server behind, never kill someone else's by name.
+let server = null;
+let url = target;
+if (existsSync(target) && statSync(target).isDirectory()) {
+  const bin = path.join(target, "node_modules/.bin/next");
+  if (!existsSync(path.join(target, ".next"))) throw new Error(`no build in ${target} — run next build first`);
+  const port = await new Promise((r) => { const s = createServer().listen(0, () => { const p = s.address().port; s.close(() => r(p)); }); });
+  server = spawn(bin, ["start", "-p", String(port)], { cwd: target, detached: true, stdio: "ignore" });
+  url = `http://127.0.0.1:${port}`;
+  for (let i = 0; i < 60; i++) {
+    try { await fetch(url); break; } catch { await new Promise((r) => setTimeout(r, 500)); }
+  }
+}
+// `next start` re-spawns next-server in its own process group, so signalling our group misses
+// it. Walk the whole descendant tree (pgrep -P works on Linux and macOS) and kill each pid.
+const descendants = (pid) => {
+  let kids = [];
+  try { kids = execSync(`pgrep -P ${pid}`).toString().split(/\s+/).filter(Boolean).map(Number); } catch {}
+  return kids.flatMap((k) => [k, ...descendants(k)]);
+};
+const stopServer = () => {
+  if (!server) return;
+  for (const pid of [...descendants(server.pid), server.pid]) { try { process.kill(pid, "SIGTERM"); } catch {} }
+  server = null;
+};
+process.on("exit", stopServer);
 
 function loadPlaywright() {
   const req = createRequire(import.meta.url);
@@ -57,6 +88,7 @@ for (const r of runs) {
   await ctx.close();
 }
 await browser.close();
+stopServer();
 console.log(`screenshots → ${out}`);
 if (errors.length) {
   console.log("issues:\n  " + errors.join("\n  "));

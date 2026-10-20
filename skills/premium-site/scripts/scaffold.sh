@@ -72,8 +72,48 @@ bash "$SCRIPT_DIR/patch_registry.sh" .
 
 echo "• motion primitives → src/components/motion/"
 mkdir -p src/components/motion
-cp -n "$SCRIPT_DIR/../assets/motion/"*.tsx "$SCRIPT_DIR/../assets/motion/"*.ts src/components/motion/
+for f in "$SCRIPT_DIR/../assets/motion/"*.ts*; do
+  [[ -e "src/components/motion/$(basename "$f")" ]] || cp "$f" src/components/motion/
+done
 if [[ $LENIS == 0 ]]; then rm -f src/components/motion/smooth-scroll.tsx; fi  # needs lenis; flowy adds it
+
+# eslint-config-next 16's React-Compiler hook rules fail freshly installed Bklit/Kokonut code
+# (30-60 errors, none in your code). Lint vendored registry folders leniently; keep yours strict.
+echo "• eslint: relax react-compiler rules for vendored registry code"
+node -e '
+const fs=require("fs");const f="eslint.config.mjs";let s=fs.readFileSync(f,"utf8");
+if(!s.includes("components/kokonutui/**")){
+ s=s.replace(/(\.\.\.nextTs,\n)/, `$1  // Vendored shadcn-registry source (Bklit charts, Kokonut UI, shadcn ui) is audited upstream.
+  {
+    files: ["src/components/charts/**", "src/components/kokonutui/**", "src/components/ui/**", "src/components/shimmering-text.tsx"],
+    rules: {
+      "react-hooks/refs": "off",
+      "react-hooks/set-state-in-effect": "off",
+      "react-hooks/exhaustive-deps": "off",
+      "react-hooks/purity": "off",
+      "react-hooks/immutability": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/no-unused-vars": "off",
+      "react/no-unescaped-entities": "off",
+      "@next/next/no-img-element": "off",
+    },
+  },
+`);fs.writeFileSync(f,s);}'
+
+# Font variables: shadcn's theme expects --font-sans / --font-mono; create-next-app emits
+# --font-geist-*. Point the theme at role-named vars (--font-sans, --font-mono, --font-display)
+# that the layout's next/font calls will define.
+echo "• fonts: role-named theme vars (--font-display / --font-sans / --font-mono)"
+node -e '
+const fs=require("fs");const f="src/app/globals.css";let s=fs.readFileSync(f,"utf8");
+s=s.replace(/--font-mono:\s*var\(--font-geist-mono\);/,"--font-mono: var(--font-mono);");
+if(!s.includes("--font-display: var(--font-display)"))
+  s=s.replace(/@theme inline \{\n/,"@theme inline {\n  --font-display: var(--font-display);\n");
+s=s.replace(/--font-heading:\s*var\(--font-sans\);/,"--font-heading: var(--font-display);");
+fs.writeFileSync(f,s);'
+
+echo "• layout: template with role-named fonts + <MotionProvider>"
+if grep -q "Create Next App" src/app/layout.tsx; then cp "$SCRIPT_DIR/../assets/templates/layout.tsx" src/app/layout.tsx; fi
 
 if [[ $DARK == 1 ]]; then
   # shadcn + Kokonut style dark mode through the `.dark` class variant, not the media query.
@@ -83,4 +123,4 @@ s=s.replace(/className=\{`/, "className={`dark ");fs.writeFileSync(f,s);'
   echo "• dark: added class=\"dark\" to <html>"
 fi
 
-echo "✓ scaffolded $DIR — next: fonts + tokens + <MotionProvider> in layout (references/art-direction.md §6)"
+echo "✓ scaffolded $DIR — next: pick fonts in layout.tsx, set --brand tokens in globals.css, replace metadata TODOs"

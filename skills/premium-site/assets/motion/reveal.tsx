@@ -57,6 +57,7 @@ export function Stagger({ gap = stagger.base, delay = 0, onMount, children, ...p
   );
 }
 
+/** Renders a div. Inside <ul>/<ol>, use `<motion.li variants={itemVariants}>` instead. */
 export function StaggerItem({ children, ...props }: ComponentProps<typeof motion.div>) {
   return (
     <motion.div variants={itemVariants} {...props}>

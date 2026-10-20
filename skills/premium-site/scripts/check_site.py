@@ -56,8 +56,9 @@ layout = next((p for p in files if p.name == "layout.tsx" and p.parent.name == "
 ltxt = text.get(layout, "") if layout else ""
 check("--font-display" in all_src, "FAIL", "a display face is loaded and exposed as --font-display")
 check(re.search(r"--brand\s*:", all_src) is not None, "FAIL", "one accent token --brand is defined")
-check("Create Next App" not in ltxt, "FAIL", "metadata title/description replaced")
-h1s = len(re.findall(r"<h1\b|as=\"h1\"|as: \"h1\"", own_src))
+check("Create Next App" not in ltxt and "TODO:" not in ltxt, "FAIL", "metadata title/description replaced (no template TODOs)")
+# <MaskedLines> renders an h1 unless given another `as`.
+h1s = len(re.findall(r"<h1\b|as=\"h1\"|as: \"h1\"|<MaskedLines(?![^>]*\bas=)", own_src))
 check(h1s >= 1, "WARN", f"page has an h1 (found {h1s})")
 raw_imgs = own_grep(r"<img\b")
 check(not raw_imgs, "WARN", "hero/section imagery uses next/image, not raw <img>")

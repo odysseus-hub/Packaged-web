@@ -2,9 +2,10 @@
 
 // Stat counter that rolls up once when scrolled into view. Under reduced motion it renders
 // the final value immediately — a number is content, so it must never depend on animation.
-import { animate, useInView, useReducedMotion } from "motion/react";
+import { animate, useInView } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { easeOutExpo } from "./tokens";
+import { usePrefersReducedMotion } from "./use-prefers-reduced-motion";
 
 export function CountUp({
   to,
@@ -21,7 +22,7 @@ export function CountUp({
 }) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.6 });
-  const reduce = useReducedMotion();
+  const reduce = usePrefersReducedMotion();
   const [value, setValue] = useState(from);
 
   useEffect(() => {

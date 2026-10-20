@@ -18,4 +18,11 @@ for f in "$ROOT"/src/components/charts/chart-loading-label.tsx "$ROOT"/component
     sed -i 's#"\.\./components/shimmering-text"#"@/components/shimmering-text"#' "$f"; echo "  patched: shimmering-text import in $f"
   fi
 done
+# 3. Bklit bar.tsx: while the y-domain tweens, zero-value bars compute a negative height →
+#    "<rect> attribute height: A negative value is not valid" console errors. Clamp at 0.
+for f in "$ROOT"/src/components/charts/bar.tsx "$ROOT"/components/charts/bar.tsx; do
+  if [[ -f "$f" ]] && grep -q 'barHeight = innerHeight - valuePos;' "$f"; then
+    sed -i 's/barHeight = innerHeight - valuePos;/barHeight = Math.max(0, innerHeight - valuePos);/' "$f"; echo "  patched: negative bar height clamp in $f"
+  fi
+done
 exit 0

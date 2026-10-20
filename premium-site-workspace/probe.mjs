@@ -42,12 +42,13 @@ try {
     mobileOverflow: document.documentElement.scrollWidth > window.innerWidth + 1,
   })));
   await ctx.close();
-  // reduced motion
-  ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: "reduce" });
+  // hidden text: normal vs reduced motion — only flag text hidden ONLY under reduced motion
+  const hiddenIn = async (reducedMotion) => {
+  ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion });
   page = await ctx.newPage();
   await page.goto(url, { waitUntil: "networkidle" });
   await walk(page, 900);
-  Object.assign(res, await page.evaluate(() => {
+  const r = await page.evaluate(() => {
     const hidden = [];
     for (const el of document.querySelectorAll("h1,h2,h3,p,li,button,a")) {
       const text = (el.innerText || "").trim();
@@ -58,9 +59,15 @@ try {
       while (n && n !== document.documentElement) { op *= parseFloat(getComputedStyle(n).opacity); n = n.parentElement; }
       if (op < 0.1) hidden.push(text.slice(0, 40));
     }
-    return { reducedHidden: hidden.length, reducedHiddenSamples: hidden };
-  }));
+    return hidden;
+  });
   await ctx.close();
+  return r;
+  };
+  const normal = new Set(await hiddenIn("no-preference"));
+  const onlyReduced = (await hiddenIn("reduce")).filter((t) => !normal.has(t));
+  res.reducedHidden = onlyReduced.length;
+  res.reducedHiddenSamples = onlyReduced;
 } catch (e) {
   console.log(JSON.stringify({ error: String(e) }));
   process.exit(0);

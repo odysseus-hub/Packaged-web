@@ -1,0 +1,95 @@
+{
+  "expectations": [
+    {
+      "text": "next build succeeds",
+      "passed": true,
+      "evidence": "\u25cb  (Static)  prerendered as static content"
+    },
+    {
+      "text": "eslint reports 0 errors",
+      "passed": true,
+      "evidence": "clean"
+    },
+    {
+      "text": "Animation uses Motion (motion/react)",
+      "passed": true,
+      "evidence": "files: ['count-up.tsx', 'hero.tsx', 'hover.tsx', 'integrations.tsx', 'motion-provider.tsx', 'nav.tsx', 'pricing.tsx', 'proof.tsx', 'reveal.tsx', 'shimmering-text.tsx', 'smooth-scroll.tsx', 'tokens.ts']"
+    },
+    {
+      "text": "Reduced motion explicitly handled in authored code",
+      "passed": true,
+      "evidence": "useReducedMotion"
+    },
+    {
+      "text": "Uses Kokonut UI animated components",
+      "passed": true,
+      "evidence": "['notification-stack', 'particle-button', 'uptime-card']"
+    },
+    {
+      "text": "Uses Bklit UI charts",
+      "passed": true,
+      "evidence": "['area-chart', 'bar', 'bar-chart', 'bar-x-axis', 'grid', 'tooltip', 'x-axis']"
+    },
+    {
+      "text": "Distinct display + text fonts via next/font",
+      "passed": true,
+      "evidence": "families: ['Anton', 'Archivo', 'JetBrains_Mono']"
+    },
+    {
+      "text": "A chromatic accent token is defined (--brand/--accent/--primary)",
+      "passed": true,
+      "evidence": "--brand: oklch(0.7 0.215 38)"
+    },
+    {
+      "text": "No layout-property animation (width/height/top/left/margin)",
+      "passed": true,
+      "evidence": "none"
+    },
+    {
+      "text": "Staggered entrance choreography",
+      "passed": true,
+      "evidence": "<Stagger"
+    },
+    {
+      "text": "Spring-based hover interactions",
+      "passed": true,
+      "evidence": "found"
+    },
+    {
+      "text": "Scroll-linked motion layer present",
+      "passed": true,
+      "evidence": "useScroll"
+    },
+    {
+      "text": "No lorem ipsum placeholder copy",
+      "passed": true,
+      "evidence": "none"
+    },
+    {
+      "text": "Mobile (390px): no horizontal overflow",
+      "passed": true,
+      "evidence": "scrollWidth=390"
+    },
+    {
+      "text": "No runtime/console errors",
+      "passed": true,
+      "evidence": "none"
+    },
+    {
+      "text": "Reduced motion: no text hidden that is visible with motion on",
+      "passed": true,
+      "evidence": "0 hidden text elements: []"
+    },
+    {
+      "text": "Hero headline is large display type (>= 64px on desktop)",
+      "passed": true,
+      "evidence": "h1 font-size 144px, family Anton, \"Anton Fallback\""
+    }
+  ],
+  "summary": {
+    "passed": 17,
+    "failed": 0,
+    "total": 17,
+    "pass_rate": 1.0
+  }
+}

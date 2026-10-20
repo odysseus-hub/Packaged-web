@@ -58,7 +58,8 @@ def grade(run_dir, needs_chart):
     add("next build succeeds", code == 0, out.strip().splitlines()[-1] if out.strip() else "")
     code, out = run("npx eslint . --max-warnings=9999", site, 300)
     errs = re.search(r"(\d+) errors?", out)
-    add("eslint reports 0 errors", code == 0, (errs.group(0) if errs else "clean") if code else "clean")
+    ev = "clean" if code == 0 else (errs.group(0) if errs else "eslint did not run: " + ("no eslint config" if "eslint.config" in out else out.strip().splitlines()[0][:120]))
+    add("eslint reports 0 errors", code == 0, ev)
 
     add("Animation uses Motion (motion/react)", re.search(r'from\s+["\']motion/react', src),
         f"files: {names(r'from\s+[\"\\\']motion/react')}")
@@ -109,7 +110,7 @@ def grade(run_dir, needs_chart):
         return ex
     add("Mobile (390px): no horizontal overflow", not pr["mobileOverflow"], f"scrollWidth={pr['mobileScrollWidth']}")
     add("No runtime/console errors", not pr["errors"], "; ".join(pr["errors"][:3]) or "none")
-    add("Reduced motion: all text visible after scrolling", pr["reducedHidden"] == 0,
+    add("Reduced motion: no text hidden that is visible with motion on", pr["reducedHidden"] == 0,
         f"{pr['reducedHidden']} hidden text elements: {pr['reducedHiddenSamples'][:3]}")
     add("Hero headline is large display type (>= 64px on desktop)", pr["h1Size"] >= 64, f"h1 font-size {pr['h1Size']}px, family {pr['h1Family'][:60]}")
     return ex
@@ -117,12 +118,12 @@ def grade(run_dir, needs_chart):
 
 for meta in sorted(ITER.glob("eval-*/eval_metadata.json")):
     md = json.loads(meta.read_text())
-    for run_dir in sorted(p for p in meta.parent.iterdir() if p.is_dir()):
+    for run_dir in sorted(meta.parent.glob('*/run-*')):
         ex = grade(run_dir, needs_chart=md["eval_name"] == "bold-product-landing")
         passed = sum(e["passed"] for e in ex)
         g = {"expectations": ex, "summary": {"passed": passed, "failed": len(ex) - passed, "total": len(ex),
                                               "pass_rate": round(passed / len(ex), 3) if ex else 0}}
         (run_dir / "grading.json").write_text(json.dumps(g, indent=2))
-        print(f"{meta.parent.name}/{run_dir.name}: {passed}/{len(ex)}")
+        print(f"{meta.parent.name}/{run_dir.parent.name}/{run_dir.name}: {passed}/{len(ex)}")
         for e in ex:
             print(f"   {'✓' if e['passed'] else '✗'} {e['text']} — {e['evidence'][:110]}")

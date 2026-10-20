@@ -1,0 +1,95 @@
+{
+  "expectations": [
+    {
+      "text": "next build succeeds",
+      "passed": true,
+      "evidence": "\u0192  (Dynamic)  server-rendered on demand"
+    },
+    {
+      "text": "eslint reports 0 errors",
+      "passed": false,
+      "evidence": "eslint did not run: no eslint config"
+    },
+    {
+      "text": "Animation uses Motion (motion/react)",
+      "passed": false,
+      "evidence": "files: []"
+    },
+    {
+      "text": "Reduced motion explicitly handled in authored code",
+      "passed": true,
+      "evidence": "prefers-reduced-motion"
+    },
+    {
+      "text": "Uses Kokonut UI animated components",
+      "passed": false,
+      "evidence": "[]"
+    },
+    {
+      "text": "Uses Bklit UI charts (stat visualisation)",
+      "passed": false,
+      "evidence": "[]"
+    },
+    {
+      "text": "Distinct display + text fonts via next/font",
+      "passed": true,
+      "evidence": "families: ['Cormorant_Garamond', 'Inter', 'JetBrains_Mono']"
+    },
+    {
+      "text": "A chromatic accent token is defined (--brand/--accent/--primary)",
+      "passed": false,
+      "evidence": "[]"
+    },
+    {
+      "text": "No layout-property animation (width/height/top/left/margin)",
+      "passed": true,
+      "evidence": "none"
+    },
+    {
+      "text": "Staggered entrance choreography",
+      "passed": false,
+      "evidence": "none"
+    },
+    {
+      "text": "Spring-based hover interactions",
+      "passed": false,
+      "evidence": "none"
+    },
+    {
+      "text": "Scroll-linked motion layer present",
+      "passed": false,
+      "evidence": "none"
+    },
+    {
+      "text": "No lorem ipsum placeholder copy",
+      "passed": true,
+      "evidence": "none"
+    },
+    {
+      "text": "Mobile (390px): no horizontal overflow",
+      "passed": true,
+      "evidence": "scrollWidth=390"
+    },
+    {
+      "text": "No runtime/console errors",
+      "passed": true,
+      "evidence": "none"
+    },
+    {
+      "text": "Reduced motion: no text hidden that is visible with motion on",
+      "passed": true,
+      "evidence": "0 hidden text elements: []"
+    },
+    {
+      "text": "Hero headline is large display type (>= 64px on desktop)",
+      "passed": true,
+      "evidence": "h1 font-size 168px, family \"Cormorant Garamond\", \"Cormorant Garamond Fallback\", \"Times "
+    }
+  ],
+  "summary": {
+    "passed": 9,
+    "failed": 8,
+    "total": 17,
+    "pass_rate": 0.529
+  }
+}

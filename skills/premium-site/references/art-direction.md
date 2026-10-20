@@ -102,18 +102,24 @@ noise overlay (a CSS SVG filter at 3–5% opacity) to prevent banding on large g
 
 ## 6. Wiring tokens
 
+`scaffold.sh` installs this layout from `assets/templates/layout.tsx`. Swap the three
+`next/font` imports for your pairing and keep the variable names (`--font-display`,
+`--font-sans`, `--font-mono`); `globals.css` maps them to the `font-display`, `font-sans`
+and `font-mono` utilities. For a dark site, `--dark` adds `dark` to the `<html>` className.
+
 `src/app/layout.tsx`:
 
 ```tsx
-import { Instrument_Serif, Inter_Tight } from "next/font/google";
+import { Geist_Mono, Instrument_Serif, Inter_Tight } from "next/font/google";
 import { MotionProvider } from "@/components/motion/motion-provider";
 
 const display = Instrument_Serif({ subsets: ["latin"], weight: "400", style: ["normal", "italic"], variable: "--font-display" });
 const sans = Inter_Tight({ subsets: ["latin"], variable: "--font-sans" });
+const mono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" });
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`dark ${display.variable} ${sans.variable} antialiased`}>
+    <html lang="en" className={`dark ${display.variable} ${sans.variable} ${mono.variable} antialiased`}>
       <body className="bg-background text-foreground font-sans">
         <MotionProvider>{children}</MotionProvider>
       </body>
@@ -127,7 +133,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
 ```css
 @theme inline {
-  --font-display: var(--font-display);
+  --font-display: var(--font-display);   /* added by scaffold.sh */
   --color-brand: var(--brand);
   --color-brand-foreground: var(--brand-foreground);
 }

@@ -50,6 +50,9 @@ Motion idea: masked headline lines plus a background that settles. CTAs are alre
 | `spoiler-text` | Hidden-under-specks reveal: a teaser line |
 
 ## Social proof / logo strip
+- Use real brand logos only if the user supplies them, or the brand's press kit allows it.
+  Otherwise set the integration names as wordmarks in the page's own type (mono or display,
+  ~40% opacity). That reads as deliberate rather than as a broken logo wall.
 - Logos (SVG, `currentColor`, ~40% opacity) in a single row. For an infinite marquee, leave a
   static, wrapped row and **hand the marquee to flowy** (it has velocity-reactive marquees).
   Motion+ Ticker is paid, so don't use it.
@@ -86,6 +89,10 @@ Motion idea: the grid staggers by cell in reading order. Each cell's demo runs o
 Wrap every chart in `InViewMount`. See `bklit-charts.md`.
 
 ## Product UI vignettes (show, don't tell)
+Kokonut vignettes ship their own status palette (emerald, amber, rose) and zinc surfaces.
+Recolor them to the tokens (`--brand` for the alert state, neutrals for the rest) by editing
+the source in `components/kokonutui/`. Otherwise they break the one-accent rule.
+
 Kokonut has realistic, animated UI fragments that work as feature visuals:
 `uptime-card` (status), `notification-stack`, `apple-activity-card` (rings),
 `receipt-printer`, `currency-transfer`, `activity-terrain` (3D heatmap), `spending-ring`,
@@ -120,6 +127,15 @@ accordion's own. FAQs should be calm.
 | `hold-button` | Press-and-hold to confirm: deliberate, playful |
 | `slide-text-button` | Link with vertical text slide on hover. `text`, `hoverText`, `href`, `variant="ghost"` |
 | `bell-button` | Subscribe/notify |
+
+**`particle-button` notes:**
+- It renders `type="button"`. Inside a `<form>`, call `form.requestSubmit()` from its `onClick`
+  (or handle Enter yourself) so keyboard submit still works.
+- Don't pass a `ref`: its `...props` spread overrides the internal ref it uses to measure
+  width.
+- Signup forms have no backend by default. Post to a `app/api/<name>/route.ts` stub that
+  validates the email and forwards to a webhook env var if set. Tell the user it doesn't store
+  anything.
 
 Pair it with a giant closing headline (`MaskedLines`, whileInView). Motion idea: the final
 headline masks in, and the CTA is `Magnetic`.

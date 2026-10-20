@@ -39,7 +39,7 @@ Visual theme: preserve it exactly. Colors, type and imagery are final.
 Requested scroll layer (one dominant idea per section):
 | Section (selector) | Effect | Notes |
 |---|---|---|
-| #hero | background parallax + headline drifts up/fades as you leave | hero bg is a Kokonut canvas: transform its wrapper, not the canvas |
+| #hero | background parallax + headline drifts up/fades as you leave | if the background is a Kokonut canvas, transform its wrapper, not the canvas |
 | #product | scroll-scrubbed scale/tilt of product frame | |
 | #logos | velocity marquee | static row exists; replace with marquee |
 | … | | |
@@ -54,12 +54,12 @@ expect flowy to drive, so it can attach without restructuring.
 |---|---|
 | `ScrollTrigger` scrub tween | `const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] })` → `useTransform(scrollYProgress, [0, 1], [80, -80])` → `style={{ y }}` |
 | Pin + horizontal scroll | Tall outer `section` (e.g. `h-[300vh]`), inner `sticky top-0 h-svh overflow-hidden`, track `style={{ x: useTransform(scrollYProgress, [0,1], ["0%", "-66%"]) }}`. Measure the travel from `track.scrollWidth - innerWidth` |
-| `gsap.matchMedia()` reduced-motion gate | `useReducedMotion()`. Return static styles (`y: 0`) when it's true |
+| `gsap.matchMedia()` reduced-motion gate | Keep the same element and `style` object. When reduced, map motion values to resting states (`useTransform(p, [0,1], reduce ? [0,0] : [80,-80])`). Don't swap markup or drop `style`; that causes hydration error #418 |
 | Lenis + `gsap.ticker` | `smooth-scroll.tsx` (Lenis on `frame.setup`) |
 | `toggleActions` reveals | Already handled: `whileInView` / `Reveal` |
 | Smoothed scrub (`scrub: 1`) | `useSpring(useTransform(...), { stiffness: 120, damping: 30 })` |
 | Theme flip on scroll | `useTransform(scrollYProgress, [...], ["oklch(…)", "oklch(…)"])` on a wrapper's `backgroundColor` |
-| Marquee | CSS `@keyframes` on `transform: translateX`, duplicated track, paused under reduced motion. For velocity response: `useVelocity(scrollY)` → `useTransform` → skew or speed |
+| Marquee | CSS `@keyframes` on `transform: translateX`, duplicated track, paused under reduced motion. For velocity response: `useVelocity(scrollY)` → `useTransform` → skew, **on a wrapper element**. The keyframe animation and Motion's `style` both write `transform`, and on the same element the CSS animation wins |
 
 ## After flowy returns
 
