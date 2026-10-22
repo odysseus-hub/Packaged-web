@@ -23,8 +23,20 @@ try {
   let page = await ctx.newPage();
   page.on("pageerror", (e) => errors.push(e.message));
   page.on("console", (m) => m.type() === "error" && errors.push("console: " + m.text()));
-  await page.goto(url, { waitUntil: "networkidle" });
-  await page.waitForTimeout(2000);
+  await page.goto(url, { waitUntil: "domcontentloaded" });
+  await page.waitForTimeout(1500);
+  // Time-to-message: is the hero headline actually readable 1.5s after load?
+  res.h1VisibleAt1500 = await page.evaluate(() => {
+    const h = document.querySelector("h1");
+    if (!h) return false;
+    const r = h.getBoundingClientRect();
+    if (r.bottom <= 0 || r.top >= innerHeight || r.width === 0) return false;
+    let n = h, op = 1;
+    while (n && n !== document.documentElement) { op *= parseFloat(getComputedStyle(n).opacity); n = n.parentElement; }
+    return op >= 0.6;
+  });
+  await page.waitForLoadState("networkidle");
+  await page.waitForTimeout(500);
   Object.assign(res, await page.evaluate(() => {
     const h = document.querySelector("h1");
     const cs = h ? getComputedStyle(h) : null;

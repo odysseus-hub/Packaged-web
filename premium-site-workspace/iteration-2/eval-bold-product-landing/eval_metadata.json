@@ -1,0 +1,24 @@
+{
+  "eval_id": 2,
+  "eval_name": "bold-product-landing",
+  "prompt": "Make a bold, high-energy landing page for Relay \u2014 API monitoring for small dev teams (alerts in under 10 seconds, p95 latency dashboards, public status pages). It should feel loud and confident, not another bland SaaS page: big type, one strong color. Include charts showing latency improvement and uptime, a feature grid, an integrations logo strip, pricing, and a final signup CTA. Next.js + Tailwind, ready to ship on Vercel.",
+  "assertions": [
+    "next build succeeds",
+    "eslint reports 0 errors",
+    "Animation uses Motion (motion/react)",
+    "Reduced motion explicitly handled in authored code",
+    "Uses Kokonut UI animated components",
+    "Uses Bklit UI charts",
+    "Distinct display + text fonts via next/font",
+    "A chromatic accent token is defined (--brand/--accent/--primary)",
+    "No layout-property animation (width/height/top/left/margin)",
+    "Staggered entrance choreography",
+    "Spring-based hover interactions",
+    "Scroll-linked motion layer present",
+    "No lorem ipsum placeholder copy",
+    "Mobile (390px): no horizontal overflow",
+    "No runtime/console errors",
+    "Reduced motion: all text visible after scrolling",
+    "Hero headline is large display type (>= 64px on desktop)"
+  ]
+}

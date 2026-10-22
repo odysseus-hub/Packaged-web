@@ -50,6 +50,16 @@ def grade(run_dir, needs_chart):
     if not (site / "package.json").exists():
         add("Project exists", False, f"no package.json at {site}")
         return ex
+    # Process hygiene: the run must not leave its own dev/prod server running.
+    left = []
+    for pid in os.listdir("/proc"):
+        if pid.isdigit():
+            try:
+                if "next-server" in open(f"/proc/{pid}/cmdline").read() and os.readlink(f"/proc/{pid}/cwd").startswith(str(site)):
+                    left.append(pid)
+            except OSError:
+                pass
+    add("No server left running by the run", not left, f"pids {left}" if left else "none")
     files = authored(site)
     src = "\n".join(files.values())
     names = lambda pat: sorted({p.name for p, t in files.items() if re.search(pat, t)})
@@ -112,6 +122,7 @@ def grade(run_dir, needs_chart):
     add("No runtime/console errors", not pr["errors"], "; ".join(pr["errors"][:3]) or "none")
     add("Reduced motion: no text hidden that is visible with motion on", pr["reducedHidden"] == 0,
         f"{pr['reducedHidden']} hidden text elements: {pr['reducedHiddenSamples'][:3]}")
+    add("Hero headline readable within 1.5s of load", pr.get("h1VisibleAt1500"), f"h1 visible at 1.5s: {pr.get('h1VisibleAt1500')}")
     add("Hero headline is large display type (>= 64px on desktop)", pr["h1Size"] >= 64, f"h1 font-size {pr['h1Size']}px, family {pr['h1Family'][:60]}")
     return ex
 
