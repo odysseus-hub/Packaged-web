@@ -1,0 +1,105 @@
+{
+  "expectations": [
+    {
+      "text": "No server left running by the run",
+      "passed": true,
+      "evidence": "none"
+    },
+    {
+      "text": "next build succeeds",
+      "passed": true,
+      "evidence": "\u0192  (Dynamic)  server-rendered on demand"
+    },
+    {
+      "text": "eslint reports 0 errors",
+      "passed": true,
+      "evidence": "clean"
+    },
+    {
+      "text": "Animation uses Motion (motion/react)",
+      "passed": true,
+      "evidence": "files: ['count-up.tsx', 'hero.tsx', 'hover.tsx', 'motion-provider.tsx', 'nav.tsx', 'pricing.tsx', 'proof.tsx', 'reveal.tsx', 'shimmering-text.tsx', 'smooth-scroll.tsx', 'tokens.ts']"
+    },
+    {
+      "text": "Reduced motion explicitly handled in authored code",
+      "passed": true,
+      "evidence": "useReducedMotion"
+    },
+    {
+      "text": "Uses Kokonut UI animated components",
+      "passed": true,
+      "evidence": "['notification-stack', 'particle-button', 'uptime-card']"
+    },
+    {
+      "text": "Uses Bklit UI charts",
+      "passed": true,
+      "evidence": "['area-chart', 'bar', 'bar-chart', 'bar-x-axis', 'grid', 'tooltip', 'x-axis']"
+    },
+    {
+      "text": "Distinct display + text fonts via next/font",
+      "passed": true,
+      "evidence": "families: ['Anton', 'Archivo', 'Geist_Mono']"
+    },
+    {
+      "text": "A chromatic accent token is defined (--brand/--accent/--primary)",
+      "passed": true,
+      "evidence": "--brand: oklch(0.7 0.215 38)"
+    },
+    {
+      "text": "No layout-property animation (width/height/top/left/margin)",
+      "passed": true,
+      "evidence": "none"
+    },
+    {
+      "text": "Staggered entrance choreography",
+      "passed": true,
+      "evidence": "<Stagger"
+    },
+    {
+      "text": "Spring-based hover interactions",
+      "passed": true,
+      "evidence": "found"
+    },
+    {
+      "text": "Scroll-linked motion layer present",
+      "passed": true,
+      "evidence": "useScroll"
+    },
+    {
+      "text": "No lorem ipsum placeholder copy",
+      "passed": true,
+      "evidence": "none"
+    },
+    {
+      "text": "Mobile (390px): no horizontal overflow",
+      "passed": true,
+      "evidence": "scrollWidth=390"
+    },
+    {
+      "text": "No runtime/console errors",
+      "passed": true,
+      "evidence": "none"
+    },
+    {
+      "text": "Reduced motion: no text hidden that is visible with motion on",
+      "passed": true,
+      "evidence": "0 hidden text elements: []"
+    },
+    {
+      "text": "Hero headline readable within 1.5s of load",
+      "passed": true,
+      "evidence": "h1 visible at 1.5s: True"
+    },
+    {
+      "text": "Hero headline is large display type (>= 64px on desktop)",
+      "passed": true,
+      "evidence": "h1 font-size 123.84px, family Anton, \"Anton Fallback\""
+    }
+  ],
+  "summary": {
+    "passed": 19,
+    "failed": 0,
+    "total": 19,
+    "pass_rate": 1.0
+  }
+}

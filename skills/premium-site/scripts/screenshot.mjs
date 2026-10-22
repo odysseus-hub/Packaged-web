@@ -1,7 +1,7 @@
 // Capture the running site the way a reviewer sees it: desktop + mobile, full page, plus a
 // reduced-motion pass. Scrolls the page first so whileInView reveals have fired.
 //
-// Usage: node screenshot.mjs <site-dir | url> <out-dir>
+// Usage: node screenshot.mjs <site-dir | url> <out-dir> [--port N]
 //   node screenshot.mjs ./my-site ./shots           ← preferred: builds must exist (next build);
 //                                                     starts `next start` on a free port and
 //                                                     stops exactly that server afterwards
@@ -14,7 +14,11 @@ import { execSync, spawn } from "node:child_process";
 import { createServer } from "node:net";
 import path from "node:path";
 
-const [target = "http://localhost:3000", out = "./shots"] = process.argv.slice(2);
+const argv = process.argv.slice(2);
+const portFlag = argv.indexOf("--port");
+const fixedPort = portFlag >= 0 ? Number(argv.splice(portFlag, 2)[1]) : null;
+const [rawTarget = "http://localhost:3000", out = "./shots"] = argv;
+const target = /^https?:/.test(rawTarget) ? rawTarget : path.resolve(rawTarget);
 mkdirSync(out, { recursive: true });
 
 // Self-serve mode: never leave a stray server behind, never kill someone else's by name.
@@ -23,7 +27,7 @@ let url = target;
 if (existsSync(target) && statSync(target).isDirectory()) {
   const bin = path.join(target, "node_modules/.bin/next");
   if (!existsSync(path.join(target, ".next"))) throw new Error(`no build in ${target} — run next build first`);
-  const port = await new Promise((r) => { const s = createServer().listen(0, () => { const p = s.address().port; s.close(() => r(p)); }); });
+  const port = fixedPort ?? await new Promise((r) => { const s = createServer().listen(0, () => { const p = s.address().port; s.close(() => r(p)); }); });
   server = spawn(bin, ["start", "-p", String(port)], { cwd: target, detached: true, stdio: "ignore" });
   url = `http://127.0.0.1:${port}`;
   for (let i = 0; i < 60; i++) {
@@ -80,7 +84,9 @@ for (const r of runs) {
     await page.waitForTimeout(250);
   }
   await page.waitForTimeout(900);
-  const overflowX = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+  // Compare against the DEVICE width: with isMobile, Chromium widens the layout viewport to fit
+  // overflowing content, so scrollWidth === innerWidth even when the page is broken.
+  const overflowX = await page.evaluate((w) => document.documentElement.scrollWidth > w + 1, r.viewport.width);
   if (overflowX) errors.push(`[${r.name}] horizontal overflow: page is wider than the viewport`);
   await page.evaluate(() => window.scrollTo(0, 0));
   await page.waitForTimeout(400);

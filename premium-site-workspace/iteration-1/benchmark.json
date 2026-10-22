@@ -4,29 +4,35 @@
     "skill_path": "<path/to/skill>",
     "executor_model": "<model-name>",
     "analyzer_model": "<model-name>",
-    "timestamp": "2026-10-20T20:01:39Z",
+    "timestamp": "2026-10-22T02:02:50Z",
     "evals_run": [
       1,
       2
     ],
-    "runs_per_configuration": 3
+    "runs_per_configuration": 1
   },
   "runs": [
     {
       "eval_id": 2,
+      "eval_name": "bold-product-landing",
       "configuration": "with_skill",
       "run_number": 1,
       "result": {
         "pass_rate": 1.0,
-        "passed": 17,
+        "passed": 19,
         "failed": 0,
-        "total": 17,
+        "total": 19,
         "time_seconds": 826.6,
         "tokens": 222329,
         "tool_calls": 0,
         "errors": 0
       },
       "expectations": [
+        {
+          "text": "No server left running by the run",
+          "passed": true,
+          "evidence": "none"
+        },
         {
           "text": "next build succeeds",
           "passed": true,
@@ -108,6 +114,11 @@
           "evidence": "0 hidden text elements: []"
         },
         {
+          "text": "Hero headline readable within 1.5s of load",
+          "passed": true,
+          "evidence": "h1 visible at 1.5s: True"
+        },
+        {
           "text": "Hero headline is large display type (>= 64px on desktop)",
           "passed": true,
           "evidence": "h1 font-size 144px, family Anton, \"Anton Fallback\""
@@ -117,19 +128,25 @@
     },
     {
       "eval_id": 1,
+      "eval_name": "cinematic-dark-hero",
       "configuration": "with_skill",
       "run_number": 1,
       "result": {
         "pass_rate": 1.0,
-        "passed": 17,
+        "passed": 19,
         "failed": 0,
-        "total": 17,
+        "total": 19,
         "time_seconds": 819.8,
         "tokens": 220691,
         "tool_calls": 0,
         "errors": 0
       },
       "expectations": [
+        {
+          "text": "No server left running by the run",
+          "passed": true,
+          "evidence": "none"
+        },
         {
           "text": "next build succeeds",
           "passed": true,
@@ -211,6 +228,11 @@
           "evidence": "0 hidden text elements: []"
         },
         {
+          "text": "Hero headline readable within 1.5s of load",
+          "passed": true,
+          "evidence": "h1 visible at 1.5s: True"
+        },
+        {
           "text": "Hero headline is large display type (>= 64px on desktop)",
           "passed": true,
           "evidence": "h1 font-size 151.2px, family \"Instrument Serif\", \"Instrument Serif Fallback\""
@@ -220,19 +242,25 @@
     },
     {
       "eval_id": 2,
+      "eval_name": "bold-product-landing",
       "configuration": "without_skill",
       "run_number": 1,
       "result": {
-        "pass_rate": 0.529,
-        "passed": 9,
+        "pass_rate": 0.579,
+        "passed": 11,
         "failed": 8,
-        "total": 17,
+        "total": 19,
         "time_seconds": 429.2,
         "tokens": 108909,
         "tool_calls": 0,
         "errors": 0
       },
       "expectations": [
+        {
+          "text": "No server left running by the run",
+          "passed": true,
+          "evidence": "none"
+        },
         {
           "text": "next build succeeds",
           "passed": true,
@@ -314,6 +342,11 @@
           "evidence": "0 hidden text elements: []"
         },
         {
+          "text": "Hero headline readable within 1.5s of load",
+          "passed": true,
+          "evidence": "h1 visible at 1.5s: True"
+        },
+        {
           "text": "Hero headline is large display type (>= 64px on desktop)",
           "passed": true,
           "evidence": "h1 font-size 152.64px, family Archivo, \"Archivo Fallback\", \"Arial Black\", system-ui, sans-"
@@ -323,19 +356,25 @@
     },
     {
       "eval_id": 1,
+      "eval_name": "cinematic-dark-hero",
       "configuration": "without_skill",
       "run_number": 1,
       "result": {
-        "pass_rate": 0.529,
-        "passed": 9,
-        "failed": 8,
-        "total": 17,
+        "pass_rate": 0.526,
+        "passed": 10,
+        "failed": 9,
+        "total": 19,
         "time_seconds": 668.9,
         "tokens": 114918,
         "tool_calls": 0,
         "errors": 0
       },
       "expectations": [
+        {
+          "text": "No server left running by the run",
+          "passed": true,
+          "evidence": "none"
+        },
         {
           "text": "next build succeeds",
           "passed": true,
@@ -417,6 +456,11 @@
           "evidence": "0 hidden text elements: []"
         },
         {
+          "text": "Hero headline readable within 1.5s of load",
+          "passed": false,
+          "evidence": "h1 visible at 1.5s: False"
+        },
+        {
           "text": "Hero headline is large display type (>= 64px on desktop)",
           "passed": true,
           "evidence": "h1 font-size 168px, family \"Cormorant Garamond\", \"Cormorant Garamond Fallback\", \"Times "
@@ -448,10 +492,10 @@
     },
     "without_skill": {
       "pass_rate": {
-        "mean": 0.529,
-        "stddev": 0.0,
-        "min": 0.529,
-        "max": 0.529
+        "mean": 0.5525,
+        "stddev": 0.0375,
+        "min": 0.526,
+        "max": 0.579
       },
       "time_seconds": {
         "mean": 549.05,
@@ -467,16 +511,10 @@
       }
     },
     "delta": {
-      "pass_rate": "+0.47",
+      "pass_rate": "+0.45",
       "time_seconds": "+274.2",
       "tokens": "+109596"
     }
   },
-  "notes": [
-    "Non-discriminating: build succeeds, no layout-property animation, no lorem ipsum, mobile overflow, no console errors, h1 >= 64px, distinct fonts and reduced-motion visibility pass in both configs \u2014 the base model is already competent at these.",
-    "Discriminating: Motion usage, Kokonut/Bklit usage, accent token, stagger, spring hovers, scroll-linked layer, eslint config. Some of these reward following the requested stack, which baselines were never told about beyond the user prompt \u2014 read them as 'skill delivers the stack the user asked for', not as quality.",
-    "Cost: with-skill runs took ~1.5x the time (823s vs 549s) and ~2x tokens (221k vs 112k) \u2014 mostly scaffold + registry installs, the flowy pass, and screenshot-fix loops.",
-    "Qualitative: Nocturne with-skill hero is clearly stronger (baseline title is still invisible at 1.8s). Relay baseline is visually competitive (full-orange flood); with-skill wins on concept (headline as the incident timeline) and on real Bklit charts.",
-    "Both with-skill agents independently hit the same skill bugs: CountUp hydration mismatch, eslint failing on vendored registry code, unstoppable 'npx next start &' server, font-var wiring, Lenis anchor offset \u2014 fixed in iteration 2."
-  ]
+  "notes": []
 }

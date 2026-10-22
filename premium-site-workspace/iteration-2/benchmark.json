@@ -1,0 +1,528 @@
+{
+  "metadata": {
+    "skill_name": "premium-site",
+    "skill_path": "<path/to/skill>",
+    "executor_model": "<model-name>",
+    "analyzer_model": "<model-name>",
+    "timestamp": "2026-10-22T02:02:50Z",
+    "evals_run": [
+      1,
+      2
+    ],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {
+      "eval_id": 2,
+      "eval_name": "bold-product-landing",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 19,
+        "failed": 0,
+        "total": 19,
+        "time_seconds": 779.4,
+        "tokens": 216014,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "No server left running by the run",
+          "passed": true,
+          "evidence": "none"
+        },
+        {
+          "text": "next build succeeds",
+          "passed": true,
+          "evidence": "\u0192  (Dynamic)  server-rendered on demand"
+        },
+        {
+          "text": "eslint reports 0 errors",
+          "passed": true,
+          "evidence": "clean"
+        },
+        {
+          "text": "Animation uses Motion (motion/react)",
+          "passed": true,
+          "evidence": "files: ['count-up.tsx', 'hero.tsx', 'hover.tsx', 'motion-provider.tsx', 'nav.tsx', 'pricing.tsx', 'proof.tsx', 'reveal.tsx', 'shimmering-text.tsx', 'smooth-scroll.tsx', 'tokens.ts']"
+        },
+        {
+          "text": "Reduced motion explicitly handled in authored code",
+          "passed": true,
+          "evidence": "useReducedMotion"
+        },
+        {
+          "text": "Uses Kokonut UI animated components",
+          "passed": true,
+          "evidence": "['notification-stack', 'particle-button', 'uptime-card']"
+        },
+        {
+          "text": "Uses Bklit UI charts",
+          "passed": true,
+          "evidence": "['area-chart', 'bar', 'bar-chart', 'bar-x-axis', 'grid', 'tooltip', 'x-axis']"
+        },
+        {
+          "text": "Distinct display + text fonts via next/font",
+          "passed": true,
+          "evidence": "families: ['Anton', 'Archivo', 'Geist_Mono']"
+        },
+        {
+          "text": "A chromatic accent token is defined (--brand/--accent/--primary)",
+          "passed": true,
+          "evidence": "--brand: oklch(0.7 0.215 38)"
+        },
+        {
+          "text": "No layout-property animation (width/height/top/left/margin)",
+          "passed": true,
+          "evidence": "none"
+        },
+        {
+          "text": "Staggered entrance choreography",
+          "passed": true,
+          "evidence": "<Stagger"
+        },
+        {
+          "text": "Spring-based hover interactions",
+          "passed": true,
+          "evidence": "found"
+        },
+        {
+          "text": "Scroll-linked motion layer present",
+          "passed": true,
+          "evidence": "useScroll"
+        },
+        {
+          "text": "No lorem ipsum placeholder copy",
+          "passed": true,
+          "evidence": "none"
+        },
+        {
+          "text": "Mobile (390px): no horizontal overflow",
+          "passed": true,
+          "evidence": "scrollWidth=390"
+        },
+        {
+          "text": "No runtime/console errors",
+          "passed": true,
+          "evidence": "none"
+        },
+        {
+          "text": "Reduced motion: no text hidden that is visible with motion on",
+          "passed": true,
+          "evidence": "0 hidden text elements: []"
+        },
+        {
+          "text": "Hero headline readable within 1.5s of load",
+          "passed": true,
+          "evidence": "h1 visible at 1.5s: True"
+        },
+        {
+          "text": "Hero headline is large display type (>= 64px on desktop)",
+          "passed": true,
+          "evidence": "h1 font-size 123.84px, family Anton, \"Anton Fallback\""
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "cinematic-dark-hero",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.947,
+        "passed": 18,
+        "failed": 1,
+        "total": 19,
+        "time_seconds": 908.4,
+        "tokens": 197777,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "No server left running by the run",
+          "passed": false,
+          "evidence": "pids ['9114']"
+        },
+        {
+          "text": "next build succeeds",
+          "passed": true,
+          "evidence": "\u0192  (Dynamic)  server-rendered on demand"
+        },
+        {
+          "text": "eslint reports 0 errors",
+          "passed": true,
+          "evidence": "clean"
+        },
+        {
+          "text": "Animation uses Motion (motion/react)",
+          "passed": true,
+          "evidence": "files: ['count-up.tsx', 'hero.tsx', 'hover.tsx', 'how-it-works.tsx', 'looks.tsx', 'motion-provider.tsx', 'pricing.tsx', 'reveal.tsx', 'smooth-scroll.tsx', 'speed.tsx', 'tokens.ts']"
+        },
+        {
+          "text": "Reduced motion explicitly handled in authored code",
+          "passed": true,
+          "evidence": "prefers-reduced-motion"
+        },
+        {
+          "text": "Uses Kokonut UI animated components",
+          "passed": true,
+          "evidence": "['background-paths', 'particle-button']"
+        },
+        {
+          "text": "Uses Bklit UI charts (stat visualisation)",
+          "passed": true,
+          "evidence": "['bar', 'bar-chart', 'bar-x-axis', 'grid']"
+        },
+        {
+          "text": "Distinct display + text fonts via next/font",
+          "passed": true,
+          "evidence": "families: ['Geist_Mono', 'Instrument_Serif', 'Inter_Tight']"
+        },
+        {
+          "text": "A chromatic accent token is defined (--brand/--accent/--primary)",
+          "passed": true,
+          "evidence": "--brand: oklch(0.79 0.135 68)"
+        },
+        {
+          "text": "No layout-property animation (width/height/top/left/margin)",
+          "passed": true,
+          "evidence": "none"
+        },
+        {
+          "text": "Staggered entrance choreography",
+          "passed": true,
+          "evidence": "delayChildren"
+        },
+        {
+          "text": "Spring-based hover interactions",
+          "passed": true,
+          "evidence": "found"
+        },
+        {
+          "text": "Scroll-linked motion layer present",
+          "passed": true,
+          "evidence": "useScroll"
+        },
+        {
+          "text": "No lorem ipsum placeholder copy",
+          "passed": true,
+          "evidence": "none"
+        },
+        {
+          "text": "Mobile (390px): no horizontal overflow",
+          "passed": true,
+          "evidence": "scrollWidth=390"
+        },
+        {
+          "text": "No runtime/console errors",
+          "passed": true,
+          "evidence": "none"
+        },
+        {
+          "text": "Reduced motion: no text hidden that is visible with motion on",
+          "passed": true,
+          "evidence": "0 hidden text elements: []"
+        },
+        {
+          "text": "Hero headline readable within 1.5s of load",
+          "passed": true,
+          "evidence": "h1 visible at 1.5s: True"
+        },
+        {
+          "text": "Hero headline is large display type (>= 64px on desktop)",
+          "passed": true,
+          "evidence": "h1 font-size 136.8px, family \"Instrument Serif\", \"Instrument Serif Fallback\""
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "bold-product-landing",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.579,
+        "passed": 11,
+        "failed": 8,
+        "total": 19,
+        "time_seconds": 569.2,
+        "tokens": 124616,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "No server left running by the run",
+          "passed": true,
+          "evidence": "none"
+        },
+        {
+          "text": "next build succeeds",
+          "passed": true,
+          "evidence": "\u25cb  (Static)  prerendered as static content"
+        },
+        {
+          "text": "eslint reports 0 errors",
+          "passed": false,
+          "evidence": "eslint did not run: no eslint config"
+        },
+        {
+          "text": "Animation uses Motion (motion/react)",
+          "passed": false,
+          "evidence": "files: []"
+        },
+        {
+          "text": "Reduced motion explicitly handled in authored code",
+          "passed": true,
+          "evidence": "prefers-reduced-motion"
+        },
+        {
+          "text": "Uses Kokonut UI animated components",
+          "passed": false,
+          "evidence": "[]"
+        },
+        {
+          "text": "Uses Bklit UI charts",
+          "passed": false,
+          "evidence": "[]"
+        },
+        {
+          "text": "Distinct display + text fonts via next/font",
+          "passed": true,
+          "evidence": "families: ['Archivo', 'JetBrains_Mono']"
+        },
+        {
+          "text": "A chromatic accent token is defined (--brand/--accent/--primary)",
+          "passed": false,
+          "evidence": "[]"
+        },
+        {
+          "text": "No layout-property animation (width/height/top/left/margin)",
+          "passed": true,
+          "evidence": "none"
+        },
+        {
+          "text": "Staggered entrance choreography",
+          "passed": false,
+          "evidence": "none"
+        },
+        {
+          "text": "Spring-based hover interactions",
+          "passed": false,
+          "evidence": "none"
+        },
+        {
+          "text": "Scroll-linked motion layer present",
+          "passed": false,
+          "evidence": "none"
+        },
+        {
+          "text": "No lorem ipsum placeholder copy",
+          "passed": true,
+          "evidence": "none"
+        },
+        {
+          "text": "Mobile (390px): no horizontal overflow",
+          "passed": true,
+          "evidence": "scrollWidth=390"
+        },
+        {
+          "text": "No runtime/console errors",
+          "passed": true,
+          "evidence": "none"
+        },
+        {
+          "text": "Reduced motion: no text hidden that is visible with motion on",
+          "passed": true,
+          "evidence": "0 hidden text elements: []"
+        },
+        {
+          "text": "Hero headline readable within 1.5s of load",
+          "passed": true,
+          "evidence": "h1 visible at 1.5s: True"
+        },
+        {
+          "text": "Hero headline is large display type (>= 64px on desktop)",
+          "passed": true,
+          "evidence": "h1 font-size 158.4px, family Archivo, \"Archivo Fallback\", \"Arial Black\", system-ui, sans-"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "cinematic-dark-hero",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.526,
+        "passed": 10,
+        "failed": 9,
+        "total": 19,
+        "time_seconds": 623.0,
+        "tokens": 100518,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "No server left running by the run",
+          "passed": true,
+          "evidence": "none"
+        },
+        {
+          "text": "next build succeeds",
+          "passed": true,
+          "evidence": "\u0192  (Dynamic)  server-rendered on demand"
+        },
+        {
+          "text": "eslint reports 0 errors",
+          "passed": false,
+          "evidence": "eslint did not run: no eslint config"
+        },
+        {
+          "text": "Animation uses Motion (motion/react)",
+          "passed": false,
+          "evidence": "files: []"
+        },
+        {
+          "text": "Reduced motion explicitly handled in authored code",
+          "passed": true,
+          "evidence": "prefers-reduced-motion"
+        },
+        {
+          "text": "Uses Kokonut UI animated components",
+          "passed": false,
+          "evidence": "[]"
+        },
+        {
+          "text": "Uses Bklit UI charts (stat visualisation)",
+          "passed": false,
+          "evidence": "[]"
+        },
+        {
+          "text": "Distinct display + text fonts via next/font",
+          "passed": true,
+          "evidence": "families: ['Instrument_Serif', 'Inter', 'JetBrains_Mono']"
+        },
+        {
+          "text": "A chromatic accent token is defined (--brand/--accent/--primary)",
+          "passed": false,
+          "evidence": "[]"
+        },
+        {
+          "text": "No layout-property animation (width/height/top/left/margin)",
+          "passed": true,
+          "evidence": "none"
+        },
+        {
+          "text": "Staggered entrance choreography",
+          "passed": false,
+          "evidence": "none"
+        },
+        {
+          "text": "Spring-based hover interactions",
+          "passed": false,
+          "evidence": "none"
+        },
+        {
+          "text": "Scroll-linked motion layer present",
+          "passed": false,
+          "evidence": "none"
+        },
+        {
+          "text": "No lorem ipsum placeholder copy",
+          "passed": true,
+          "evidence": "none"
+        },
+        {
+          "text": "Mobile (390px): no horizontal overflow",
+          "passed": true,
+          "evidence": "scrollWidth=390"
+        },
+        {
+          "text": "No runtime/console errors",
+          "passed": true,
+          "evidence": "none"
+        },
+        {
+          "text": "Reduced motion: no text hidden that is visible with motion on",
+          "passed": true,
+          "evidence": "0 hidden text elements: []"
+        },
+        {
+          "text": "Hero headline readable within 1.5s of load",
+          "passed": false,
+          "evidence": "h1 visible at 1.5s: False"
+        },
+        {
+          "text": "Hero headline is large display type (>= 64px on desktop)",
+          "passed": true,
+          "evidence": "h1 font-size 176px, family \"Instrument Serif\", \"Instrument Serif Fallback\", \"Times New "
+        }
+      ],
+      "notes": []
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {
+        "mean": 0.9735,
+        "stddev": 0.0375,
+        "min": 0.947,
+        "max": 1.0
+      },
+      "time_seconds": {
+        "mean": 843.9,
+        "stddev": 91.2168,
+        "min": 779.4,
+        "max": 908.4
+      },
+      "tokens": {
+        "mean": 206895.5,
+        "stddev": 12895.5064,
+        "min": 197777,
+        "max": 216014
+      }
+    },
+    "without_skill": {
+      "pass_rate": {
+        "mean": 0.5525,
+        "stddev": 0.0375,
+        "min": 0.526,
+        "max": 0.579
+      },
+      "time_seconds": {
+        "mean": 596.1,
+        "stddev": 38.0423,
+        "min": 569.2,
+        "max": 623.0
+      },
+      "tokens": {
+        "mean": 112567.0,
+        "stddev": 17039.8592,
+        "min": 100518,
+        "max": 124616
+      }
+    },
+    "delta": {
+      "pass_rate": "+0.42",
+      "time_seconds": "+247.8",
+      "tokens": "+94328"
+    }
+  },
+  "notes": [
+    "With skill 37/38 (97%) vs baseline 21/38 (55%), essentially the same gap as iteration 1 (38/38 vs 21/38 on the 19-check grader). The iteration-1 skill fixes held: no hydration errors, eslint clean with no hand edits, no font fallback, no stale Bklit errors reaching the console.",
+    "The one with-skill miss is real and is the skill's own fault: its advice to 'start ./node_modules/.bin/next start and kill that PID' orphans next-server, because `next start` is a wrapper that spawns it. The guidance is now `pkill -P $PID; kill $PID`, and screenshot.mjs kills the whole process tree.",
+    "Caveat: iteration-1 'no server left' passes are vacuous. I had already cleaned up those servers before the check existed.",
+    "Grader bug found by a with-skill agent: with isMobile, Chromium widens innerWidth to fit overflowing content, so a scrollWidth-vs-innerWidth check can never fail. Fixed in both probe.mjs and screenshot.mjs (compare against the device width). After the fix, both iterations still show no real mobile overflow.",
+    "Time-to-message (new check): the cinematic baseline hid its h1 at 1.5s in BOTH iterations (long title-sequence intro). The skill's runs never did. This is the clearest quality discriminator that doesn't depend on the stack.",
+    "Convergence risk (qualitative): with-skill runs land on near-identical art direction across iterations. Nocturne used Instrument Serif + amber + 'Every frame, graded\u2026' both times; Relay used Anton + oklch(0.7 0.215 38) both times. The skill's first-row examples likely anchor these choices.",
+    "Cost: the skill uses ~1.4x the time and ~1.8x the tokens of the baseline, mostly scaffold/registry installs, the flowy pass, and screenshot-fix loops."
+  ]
+}

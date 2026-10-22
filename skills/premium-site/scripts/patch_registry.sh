@@ -18,11 +18,21 @@ for f in "$ROOT"/src/components/charts/chart-loading-label.tsx "$ROOT"/component
     sed -i 's#"\.\./components/shimmering-text"#"@/components/shimmering-text"#' "$f"; echo "  patched: shimmering-text import in $f"
   fi
 done
-# 3. Bklit bar.tsx: while the y-domain tweens, zero-value bars compute a negative height →
-#    "<rect> attribute height: A negative value is not valid" console errors. Clamp at 0.
-for f in "$ROOT"/src/components/charts/bar.tsx "$ROOT"/components/charts/bar.tsx; do
-  if [[ -f "$f" ]] && grep -q 'barHeight = innerHeight - valuePos;' "$f"; then
-    sed -i 's/barHeight = innerHeight - valuePos;/barHeight = Math.max(0, innerHeight - valuePos);/' "$f"; echo "  patched: negative bar height clamp in $f"
+# 3. Bklit bar charts log "<rect> attribute height: A negative value is not valid" while the
+#    y-domain tweens and before the container is measured. Clamp the plot size and the rect
+#    heights at 0. Anchors verified against the registry on 2026-10-22; reports when stale.
+for d in "$ROOT"/src/components/charts "$ROOT"/components/charts; do
+  [[ -f "$d/bar-chart.tsx" ]] || continue
+  hit=0
+  if grep -q 'const innerWidth = width - margin.left - margin.right;' "$d/bar-chart.tsx"; then
+    sed -i 's/const innerWidth = width - margin.left - margin.right;/const innerWidth = Math.max(0, width - margin.left - margin.right);/; s/const innerHeight = height - margin.top - margin.bottom;/const innerHeight = Math.max(0, height - margin.top - margin.bottom);/' "$d/bar-chart.tsx"; hit=1
+  fi
+  if [[ -f "$d/bar.tsx" ]] && grep -qE 'height=\{(barHeight|height)\}' "$d/bar.tsx"; then
+    sed -i -E 's/height=\{(barHeight|height)\}/height={Math.max(0, \1)}/g' "$d/bar.tsx"; hit=1
+  fi
+  if [[ $hit == 1 ]]; then echo "  patched: negative bar height clamps in $d"
+  elif ! grep -q 'Math.max(0, width - margin.left' "$d/bar-chart.tsx"; then
+    echo "  WARN: bar-chart clamp anchors not found in $d (upstream changed). Watch for negative <rect> height console errors and clamp by hand."
   fi
 done
 exit 0

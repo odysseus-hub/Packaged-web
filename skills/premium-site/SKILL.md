@@ -69,6 +69,10 @@ registries, and installs `motion`. It also:
   `--font-mono`)
 - replaces the stock layout with `assets/templates/layout.tsx`: role-named `next/font` setup
   plus `<MotionProvider>`
+
+Lenis isn't installed by default: smooth scroll belongs to the flowy pass in step 5, which
+adds `lenis` and copies `assets/motion/smooth-scroll.tsx` back in. Pass `--lenis` only if
+you're skipping flowy and still want inertial scroll.
 Re-run `patch_registry.sh` after any later `shadcn add @bklit/*`. If you'd rather run the
 commands by hand, or something fails, read `references/stack-setup.md`, which has the
 commands, versions and every known gotcha.
@@ -145,10 +149,13 @@ node <skill>/scripts/screenshot.mjs <dir> <dir>/../shots   # serves the build it
 ```
 
 `screenshot.mjs` reports console errors, hydration errors and horizontal overflow. Treat any
-of those as a failure. If you start a server yourself, run `./node_modules/.bin/next start`
-directly and stop it by that PID. Killing an `npx next start` wrapper leaves the real
-server running. Never `pkill` by name: other projects on the machine may be running their
-own servers.
+of those as a failure. Use `--port N` if your environment assigns port ranges.
+
+If you start a server yourself, note that `next start` is a wrapper: it spawns `next-server`
+as a child process. Killing only the wrapper's PID orphans the real server. Stop it with
+`pkill -P $PID; kill $PID`. That kills the server's children, then the wrapper, and stays
+scoped to your own process. Never `pkill` by name: other projects on the machine may be
+running their own servers.
 
 **Look at the screenshots.** This step matters more than any other check. Review
 desktop-hero, mobile-full and desktop-reduced-full. Ask: is the concept obvious in the first

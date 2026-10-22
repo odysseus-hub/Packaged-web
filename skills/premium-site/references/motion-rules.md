@@ -37,7 +37,8 @@ entrances.
   `spring.follow` (160/18/0.4, floaty) for magnetic and cursor-linked motion; `spring.layout`
   (visualDuration 0.5, bounce 0.15) for layout and shared-element moves.
 
-Pick a **motion personality** that fits the concept and tune these numbers *once*. A
+Pick a **motion personality** that fits the concept and tune these numbers *once*, by
+editing `src/components/motion/tokens.ts` in place (it's your copy). A
 cinematic site might use a 1.4s hero with a 0.18 stagger; a snappy product site might use
 0.5s and 0.06. Then use the tokens everywhere. Consistency is what makes motion read as
 designed.
@@ -148,7 +149,10 @@ travel. Then:
 
 - The same fade-up on every element, with the same delay.
 - Bouncy overshoot on entrances. Bounce is for things the user threw.
-- Animations over 1.2s, or a hero that hides the CTA for more than a second.
+- A hero that keeps the headline unreadable more than ~1.5s after load, or hides the CTA for
+  more than ~2s. A single line's reveal may run to 1.4s on a cinematic site, but the message
+  must be legible before the choreography finishes. The grader checks the h1 at 1.5s.
+- Non-hero animations over 1.2s.
 - Parallax on text (it hurts reading), or more than two parallax depths per section.
 - Typewriter effects on the main headline, which delays the message.
 - Infinite attention loops (pulsing buttons, wiggling arrows). One subtle loop per page, at

@@ -59,6 +59,16 @@ Motion idea: masked headline lines plus a background that settles. CTAs are alre
 - Motion idea: the row staggers in (tight stagger), hovering a logo raises it to 100%
   opacity.
 
+## Layout traps on mobile (both shipped as real bugs in testing)
+- **Grids:** a `grid` with no column template sizes its implicit column to the widest child.
+  A code block, a status widget or a long URL then pushes the whole page wider than the
+  phone. Always write `grid grid-cols-1 md:grid-cols-…`, and put `min-w-0` on grid and flex
+  children that hold wide content (plus `overflow-x-auto` on `<pre>`).
+- **Inputs in a stacked form:** an `<input className="flex-1">` inside a mobile `flex-col`
+  collapses to almost no height, because `flex-1` sets `flex-basis: 0` on the vertical axis.
+  Use `flex-col sm:flex-row` with `w-full sm:flex-1` on the input, and give it an explicit
+  height (`h-12`).
+
 ## Features
 | Pick | When |
 |---|---|
@@ -89,7 +99,8 @@ Motion idea: the grid staggers by cell in reading order. Each cell's demo runs o
 Wrap every chart in `InViewMount`. See `bklit-charts.md`.
 
 ## Product UI vignettes (show, don't tell)
-Kokonut vignettes ship their own status palette (emerald, amber, rose) and zinc surfaces.
+Kokonut vignettes (including `notification-stack`, `uptime-card` and `metric-card`) ship their
+own status palette (emerald, amber, rose) and zinc surfaces.
 Recolor them to the tokens (`--brand` for the alert state, neutrals for the rest) by editing
 the source in `components/kokonutui/`. Otherwise they break the one-accent rule.
 
@@ -129,8 +140,9 @@ accordion's own. FAQs should be calm.
 | `bell-button` | Subscribe/notify |
 
 **`particle-button` notes:**
-- It renders `type="button"`. Inside a `<form>`, call `form.requestSubmit()` from its `onClick`
-  (or handle Enter yourself) so keyboard submit still works.
+- It renders `type="button"` and shows its pending, success and error states from the promise
+  its `onClick` returns. Pass your async submit handler to `onClick`, and also call that handler
+  from the `<form>`'s `onSubmit` so pressing Enter in the input still submits.
 - Don't pass a `ref`: its `...props` spread overrides the internal ref it uses to measure
   width.
 - Signup forms have no backend by default. Post to a `app/api/<name>/route.ts` stub that

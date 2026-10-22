@@ -45,6 +45,10 @@ Requested scroll layer (one dominant idea per section):
 | … | | |
 ```
 
+If the brief includes smooth scroll, flowy must also remove any CSS
+`scroll-behavior: smooth` (on `html` or `body`, often added for anchor links). It fights
+Lenis's easing and makes anchor jumps stutter.
+
 Mark targets in markup with `id`s on sections, plus `data-flowy="<role>"` on elements you
 expect flowy to drive, so it can attach without restructuring.
 

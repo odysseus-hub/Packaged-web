@@ -66,7 +66,8 @@ lorem = own_grep(r"lorem ipsum", re.I)
 check(not lorem, "FAIL", "no lorem ipsum — write real, specific copy")
 brand_hex = set(re.findall(r"#[0-9a-fA-F]{6}\b", own_src))
 check(len(brand_hex) <= 6, "WARN",
-      f"palette discipline: {len(brand_hex)} distinct hex literals in authored code (tokens > literals)")
+      f"palette discipline: {len(brand_hex)} distinct hex literals in authored code — UI colors belong in "
+      "tokens; colors painted inside SVG/canvas artwork are fine, ignore this warn if that's what they are")
 
 for level, msg in results:
     print(f"{level:4}  {msg}")

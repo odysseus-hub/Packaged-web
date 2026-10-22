@@ -51,7 +51,9 @@ Where things land:
    `src/lib/utils.ts` as `export { cn } from "cn"`. Kokonut ships its own `utils` (clsx +
    tailwind-merge), and the first `add @kokonutui/*` stops on "utils.ts already exists.
    Overwrite?". Install `https://kokonutui.com/r/utils.json` once with `-o` (both versions export
-   the same `cn`). After that, later adds skip identical files. Pass `</dev/null` to any `shadcn add`
+   the same `cn`). After that, later adds skip identical files. Already-installed shadcn `ui/*`
+   files may still import `cn` from the `cn` package while everything else imports
+   `@/lib/utils`. Both work, and it's harmless. Pass `</dev/null` to any `shadcn add`
    in scripts, so a surprise prompt fails fast instead of hanging.
 2. **Bklit CSS vars are double-prefixed.** The CLI writes `--color-chart-grid: var(----chart-grid)`
    into `@theme inline`. Because the vars are undefined, chart grid, label and tooltip colors fail
@@ -82,16 +84,22 @@ Where things land:
    freshly installed Bklit and Kokonut source. `scaffold.sh` adds a `files:` override that turns
    those rules off for `components/{charts,kokonutui,ui}/**` only. Your own code stays strict;
    don't silence errors there.
-9. **Stopping servers.** `npx next start &` followed by `kill $!` kills only the npx wrapper,
-    and the real `next-server` keeps running. Use `screenshot.mjs <site-dir>` (it serves and
-    stops its own build), or start `./node_modules/.bin/next start` directly and kill that PID.
-    Never `pkill -f next`: it kills other projects' servers on a shared machine.
+9. **Stopping servers.** Both `npx next start` and `./node_modules/.bin/next start` are wrappers
+   that spawn `next-server` as a child process. `kill $!` kills only the wrapper and orphans
+   the real server, which keeps holding the port. Either use `screenshot.mjs <site-dir>`
+   (it serves its own build and kills the whole process tree), or stop your server with
+   `pkill -P $PID; kill $PID`. Never `pkill -f next`: it kills other projects' servers on a
+   shared machine.
 10. **Hydration and reduced motion.** Motion's `useReducedMotion()` returns the real preference
     on the first client render, but the server rendered `null`. Branching *markup* on it (text,
     conditional elements, `style={reduce ? undefined : {...}}`) triggers React error #418. Use
     `usePrefersReducedMotion()` (in `assets/motion/`, built on `useSyncExternalStore`) for
     render-affecting branches, or keep the markup identical and change only the motion values.
-11. **Remote images** need `images.remotePatterns` in `next.config.ts` (e.g. `images.unsplash.com`).
+11. **`new Date()` (and `Math.random()`) in a server component fails the build** under
+    Next 16's default `cacheComponents`: "encountered the unstable value `new Date()` while
+    prerendering". The classic victim is a footer copyright year. Hardcode the year, or render
+    it from a client component. Verified 2026-10-22.
+12. **Remote images** need `images.remotePatterns` in `next.config.ts` (e.g. `images.unsplash.com`).
    Prefer local files in `public/` for hero imagery: they're faster, and no outside host can
    break your hero.
 
