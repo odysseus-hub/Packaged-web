@@ -59,7 +59,7 @@ export function Pricing() {
           <h2 className="mt-5 font-display text-[clamp(2.6rem,5.5vw,5rem)] leading-[0.95] tracking-[-0.02em] text-balance">
             Cheaper than <em>one day</em> in a grading suite.
           </h2>
-          <p className="mt-6 text-lg text-muted-foreground">Billed monthly. Cancel any time.</p>
+          <p className="mt-6 text-lg text-muted-foreground">Prices in USD, per month. Studio includes five seats.</p>
         </Reveal>
 
         <Stagger gap={0.1} className="mt-16">

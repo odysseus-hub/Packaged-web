@@ -1,7 +1,7 @@
 "use client";
 
-import { AnimatePresence, motion } from "motion/react";
-import { useId, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from "motion/react";
+import { useId, useRef, useState } from "react";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/reveal";
 import { duration, easeInOutQuart } from "@/components/motion/tokens";
 import { GradedPlate, LOG, LOOKS, SceneDefs } from "./scene";
@@ -10,6 +10,12 @@ export function Looks() {
   const [active, setActive] = useState(LOOKS[0]);
   const [split, setSplit] = useState(50);
   const sliderId = useId();
+  // flowy scroll layer: the frame opens up to full size as it rolls into view, like a projector
+  // racking onto the screen. Scrubbed with scroll; resting value (scale 1) under reduced motion.
+  const frameRef = useRef<HTMLElement>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: frameRef, offset: ["start end", "center center"] });
+  const frameScale = useTransform(scrollYProgress, [0, 1], reduce ? [1, 1] : [0.9, 1]);
 
   return (
     <section id="looks" className="section-pad relative border-t border-hairline bg-[oklch(0.115_0.006_60)]">
@@ -29,7 +35,7 @@ export function Looks() {
         </Reveal>
 
         <Reveal y={48} delay={0.1} className="mt-14">
-          <figure data-flowy="product">
+          <motion.figure ref={frameRef} data-flowy="product" style={{ scale: frameScale }}>
             <div className="relative aspect-[2.39/1] min-h-[220px] w-full overflow-hidden rounded-sm bg-black ring-1 ring-hairline has-[input:focus-visible]:ring-2 has-[input:focus-visible]:ring-brand">
               {/* Graded layer, crossfading between looks */}
               <AnimatePresence initial={false} mode="sync">
@@ -84,7 +90,7 @@ export function Looks() {
               <span>Plate 04 · “Route 9, magic hour” · rendered in code</span>
               <span>{active.note}</span>
             </figcaption>
-          </figure>
+          </motion.figure>
         </Reveal>
 
         <Stagger gap={0.06} className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">

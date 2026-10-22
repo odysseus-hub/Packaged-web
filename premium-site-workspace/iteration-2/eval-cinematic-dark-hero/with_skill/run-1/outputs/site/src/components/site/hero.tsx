@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
+import { useRef } from "react";
 import BackgroundPaths from "@/components/kokonutui/background-paths";
 import { Magnetic } from "@/components/motion/hover";
 import { MaskedLines, Stagger, StaggerItem } from "@/components/motion/reveal";
@@ -31,8 +32,18 @@ function Matte({ side, children }: { side: "top" | "bottom"; children: React.Rea
 }
 
 export function Hero() {
+  // flowy scroll layer: as the hero leaves, the light drifts slower than the page (depth) and the
+  // title card lifts and dims like a credit clearing frame. Resting values under reduced motion.
+  const ref = useRef<HTMLElement>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+  const bgY = useTransform(scrollYProgress, [0, 1], reduce ? ["0%", "0%"] : ["0%", "28%"]);
+  const titleY = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [0, -90]);
+  const titleOpacity = useTransform(scrollYProgress, [0, 0.75], reduce ? [1, 1] : [1, 0.15]);
+
   return (
     <section
+      ref={ref}
       id="hero"
       className="relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-[oklch(0.11_0.006_60)]"
     >
@@ -41,6 +52,7 @@ export function Hero() {
         data-flowy="hero-bg"
         aria-hidden="true"
         className="absolute inset-0 -z-10"
+        style={{ y: bgY }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
@@ -86,7 +98,10 @@ export function Hero() {
         </motion.nav>
       </Matte>
 
-      <div className="container-x relative flex flex-1 flex-col justify-center pt-[clamp(6rem,16svh,9rem)] pb-[clamp(6rem,16svh,9rem)]">
+      <motion.div
+        data-flowy="hero-title"
+        style={{ y: titleY, opacity: titleOpacity }}
+        className="container-x relative flex flex-1 flex-col justify-center pt-[clamp(6rem,16svh,9rem)] pb-[clamp(6rem,16svh,9rem)]">
         <Stagger onMount delay={0.35}>
           <StaggerItem>
             <p className="slate flex items-center gap-3 text-muted-foreground">
@@ -139,7 +154,7 @@ export function Hero() {
             </dl>
           </StaggerItem>
         </Stagger>
-      </div>
+      </motion.div>
 
       <Matte side="bottom">
         <motion.div

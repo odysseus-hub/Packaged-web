@@ -76,7 +76,7 @@ export function Waitlist() {
               autoComplete="email"
               required
               placeholder="you@yourfilm.com"
-              className="h-12 flex-1 rounded-full border border-hairline bg-surface px-6 text-base text-foreground placeholder:text-muted-foreground/70 focus-visible:border-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50"
+              className="h-12 w-full rounded-full sm:flex-1 border border-hairline bg-surface px-6 text-base text-foreground placeholder:text-muted-foreground/70 focus-visible:border-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50"
             />
             <Magnetic className="self-center">
               <ParticleButton

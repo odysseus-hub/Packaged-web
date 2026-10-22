@@ -10,9 +10,9 @@ import { InViewMount, Reveal, Stagger, StaggerItem } from "@/components/motion/r
 
 // Minutes to a first full grade of a 20-minute short (ingest → matched → exported).
 const DATA = [
-  { name: "By hand, shot by shot", other: 480, nocturne: 0 },
-  { name: "LUT + manual matching", other: 190, nocturne: 0 },
-  { name: "Nocturne", other: 0, nocturne: 14 },
+  { name: "By hand", label: "By hand, shot by shot", other: 480, nocturne: 0 },
+  { name: "LUT + match", label: "LUT + manual matching", other: 190, nocturne: 0 },
+  { name: "Nocturne", label: "Nocturne", other: 0, nocturne: 14 },
 ];
 
 export function Speed() {
@@ -54,8 +54,8 @@ export function Speed() {
             <StaggerItem>
               <dl className="mt-10 grid grid-cols-3 gap-6 border-t border-hairline pt-6">
                 {DATA.map((d) => (
-                  <div key={d.name}>
-                    <dt className="text-xs text-muted-foreground">{d.name}</dt>
+                  <div key={d.label}>
+                    <dt className="text-xs text-muted-foreground">{d.label}</dt>
                     <dd
                       className={`mt-1 font-display text-3xl tabular-nums ${
                         d.nocturne ? "text-brand" : "text-foreground"

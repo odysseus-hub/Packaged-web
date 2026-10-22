@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 // Pairing from ART_DIRECTION.md: Instrument Serif (display) / Inter Tight (text) / Geist Mono (timecodes).
 import { Geist_Mono, Instrument_Serif, Inter_Tight } from "next/font/google";
 import { MotionProvider } from "@/components/motion/motion-provider";
+import { SmoothScroll } from "@/components/motion/smooth-scroll";
+import "lenis/dist/lenis.css";
 import "./globals.css";
 
 const display = Instrument_Serif({
@@ -31,7 +33,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`dark ${display.variable} ${sans.variable} ${mono.variable} antialiased`}
     >
       <body className="bg-background font-sans text-foreground">
-        <MotionProvider>{children}</MotionProvider>
+        <MotionProvider>
+          <SmoothScroll />
+          {children}
+        </MotionProvider>
       </body>
     </html>
   );

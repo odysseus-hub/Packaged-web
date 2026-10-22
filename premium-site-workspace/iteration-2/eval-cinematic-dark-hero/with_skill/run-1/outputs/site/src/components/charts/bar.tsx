@@ -115,8 +115,6 @@ interface AnimatedBarProps {
 function AnimatedBar({
   x,
   y,
-  width,
-  height,
   fill,
   rx,
   ry,
@@ -129,7 +127,12 @@ function AnimatedBar({
   revealEpoch,
   isHorizontal,
   growOrigin,
+  height: rawHeight,
+  width: rawWidth,
 }: AnimatedBarProps) {
+  // Patched: never hand SVG a negative size (Chrome logs "<rect> attribute height").
+  const height = Math.max(0, rawHeight);
+  const width = Math.max(0, rawWidth);
   const enterAnim = transitionWithDelay(enterTransition, index * staggerDelay);
 
   if (animationType === "fade") {
@@ -439,7 +442,7 @@ const BarInner = memo(function BarInner({
         return (
           <rect
             fill={fill}
-            height={barHeight}
+            height={Math.max(0, barHeight)}
             key={barKey}
             opacity={isFaded ? fadedOpacity : 1}
             rx={effectiveRx}

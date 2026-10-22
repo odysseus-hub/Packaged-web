@@ -31,11 +31,11 @@ export function Footer() {
       </div>
       <p
         aria-hidden="true"
-        className="mt-20 -mb-[0.2em] select-none text-center font-display text-[22vw] leading-[0.8] tracking-[-0.05em] text-foreground/[0.07]"
+        className="mt-20 select-none text-center font-display text-[22vw] leading-[0.8] tracking-[-0.05em] text-foreground/[0.07]"
       >
         Nocturne
       </p>
-      <div className="container-x slate absolute inset-x-0 bottom-6 flex justify-between text-[0.6rem] text-muted-foreground">
+      <div className="container-x slate relative flex justify-between pt-2 pb-6 text-[0.6rem] text-muted-foreground">
         <span>© 2026 Nocturne</span>
         <span>Fin.</span>
       </div>
