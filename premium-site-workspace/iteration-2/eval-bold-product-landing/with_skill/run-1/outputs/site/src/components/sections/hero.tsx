@@ -103,7 +103,7 @@ export function Hero() {
                 9.4 seconds.
               </span>,
             ]}
-            className="font-display text-[clamp(3.4rem,8.6vw,9.25rem)] uppercase leading-[0.93] tracking-[-0.01em] text-balance"
+            className="font-display text-[clamp(3.4rem,8.6vw,9.25rem)] uppercase leading-[0.98] tracking-[-0.01em] text-balance"
           />
           <Stagger onMount delay={0.55} className="mt-9 flex flex-col gap-9">
             <StaggerItem>

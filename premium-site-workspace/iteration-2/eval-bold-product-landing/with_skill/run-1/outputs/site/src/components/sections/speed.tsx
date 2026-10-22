@@ -20,7 +20,7 @@ export function Speed() {
           </h2>
         </Reveal>
         <p
-          className="mt-4 font-display uppercase leading-[0.8] tracking-[-0.02em] text-[clamp(9rem,34vw,30rem)]"
+          className="mt-10 font-display uppercase leading-[0.86] tracking-[-0.02em] text-[clamp(9rem,34vw,30rem)]"
         >
           <CountUp to={9.4} duration={1.4} format={(n) => n.toFixed(1)} />
           <span className="text-brand">s</span>
