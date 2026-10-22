@@ -1,6 +1,11 @@
 {
   "expectations": [
     {
+      "text": "No server left running by the run",
+      "passed": true,
+      "evidence": "none"
+    },
+    {
       "text": "next build succeeds",
       "passed": true,
       "evidence": "\u0192  (Dynamic)  server-rendered on demand"
@@ -81,15 +86,20 @@
       "evidence": "0 hidden text elements: []"
     },
     {
+      "text": "Hero headline readable within 1.5s of load",
+      "passed": true,
+      "evidence": "h1 visible at 1.5s: True"
+    },
+    {
       "text": "Hero headline is large display type (>= 64px on desktop)",
       "passed": true,
       "evidence": "h1 font-size 151.2px, family \"Instrument Serif\", \"Instrument Serif Fallback\""
     }
   ],
   "summary": {
-    "passed": 17,
+    "passed": 19,
     "failed": 0,
-    "total": 17,
+    "total": 19,
     "pass_rate": 1.0
   }
 }

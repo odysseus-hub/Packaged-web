@@ -1,6 +1,11 @@
 {
   "expectations": [
     {
+      "text": "No server left running by the run",
+      "passed": true,
+      "evidence": "none"
+    },
+    {
       "text": "next build succeeds",
       "passed": true,
       "evidence": "\u0192  (Dynamic)  server-rendered on demand"
@@ -81,15 +86,20 @@
       "evidence": "0 hidden text elements: []"
     },
     {
+      "text": "Hero headline readable within 1.5s of load",
+      "passed": false,
+      "evidence": "h1 visible at 1.5s: False"
+    },
+    {
       "text": "Hero headline is large display type (>= 64px on desktop)",
       "passed": true,
       "evidence": "h1 font-size 168px, family \"Cormorant Garamond\", \"Cormorant Garamond Fallback\", \"Times "
     }
   ],
   "summary": {
-    "passed": 9,
-    "failed": 8,
-    "total": 17,
-    "pass_rate": 0.529
+    "passed": 10,
+    "failed": 9,
+    "total": 19,
+    "pass_rate": 0.526
   }
 }
