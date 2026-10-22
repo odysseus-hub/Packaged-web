@@ -46,6 +46,11 @@ check(controllers <= 1, "FAIL", "at most one smooth-scroll controller (Lenis OR 
 check("prefers-reduced-motion" in all_src or "useReducedMotion" in own_src, "WARN",
       "reduced-motion handled for any CSS keyframes / custom loops (media query or useReducedMotion)")
 
+# Render loops (WebGL, canvas, R3F) must stand down under reduced motion.
+loopers = [p for p in own if re.search(r'getContext\(["\']webgl|<Canvas\b|requestAnimationFrame\(', text[p])]
+ungated = [p.name for p in loopers if not re.search(r"prefers-reduced-motion|usePrefersReducedMotion|useReducedMotion|\breduce\b", text[p])]
+check(not ungated, "WARN", "render loops (WebGL/canvas/R3F/rAF) are gated by reduced motion" + (f" → {ungated}" if ungated else ""))
+
 # --- registry install hygiene --------------------------------------------------------------
 check("var(----" not in all_src, "FAIL", "no double-prefixed Bklit vars (run scripts/patch_registry.sh)")
 check(not re.search(r'"\.\./components/shimmering-text"', all_src), "FAIL",

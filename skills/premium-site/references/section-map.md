@@ -30,6 +30,7 @@ Motion idea: the nav fades in last in the hero sequence. Never animate it on eve
 | `halftone-background` | An image (or lit sphere) as a halftone print, with a loupe | `src`, `cell`, `angle`, `loupe` |
 | `shape-hero` | Playful physics shapes drop and pile under the headline | `eyebrow`, `title`, `description`, `actions`, `as="h1"`, `shapes`, `fill` |
 | Custom split hero | Product shot on the right, type on the left | `MaskedLines` + `Stagger onMount` + a framed product vignette |
+| `fx/halftone-shader.tsx` (skill asset) | GPU two-ink halftone field: cursor lens, scroll-velocity misregistration. Print, generative and editorial concepts. See vfx-recipes §1 |
 | Type-as-image | Giant cropped headline | `MaskedLines` at 15–25vw; optional `swoosh-text` for one word |
 
 Most Kokonut hero backgrounds render a **demo heading** when children are omitted. Always pass
@@ -78,6 +79,12 @@ Motion idea: masked headline lines plus a background that settles. CTAs are alre
 | `bento-grid` (Kokonut) | Only when "rearrangeable dashboard" *is* the feature: it's a draggable, resizable widget grid |
 
 Motion idea: the grid staggers by cell in reading order. Each cell's demo runs on its own.
+
+## Product in 3D (one per site, tied to scroll)
+A scroll-pinned, grabbable product: spin on scroll, a flip plus stage-color flood per beat
+(flavor, colorway, model), drag-to-throw, pointer tilt. Templates in `assets/3d/`
+(`scaffold.sh --3d`). Follow `references/3d-product.md` for modeling, studio light, mobile
+camera and reduced motion.
 
 ## Product showcase
 - A framed screenshot or composed UI with layered depth (`-rotate-2`, a shadow stack, an

@@ -9,7 +9,7 @@ export function Container({ className, children }: { className?: string; childre
 /** The specimen-book caption every section opens with: plate number, rule name, the rule. */
 export function PlateLabel({ n, name, rule }: { n: string; name: string; rule?: string }) {
   return (
-    <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 border-t border-border pt-4 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+    <div className="rule-draw flex flex-wrap items-baseline gap-x-4 gap-y-1 pt-4 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
       <span className="text-brand">Plate {n}</span>
       <span className="text-foreground">{name}</span>
       {rule ? <span className="normal-case tracking-normal">{rule}</span> : null}

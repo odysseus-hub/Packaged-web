@@ -40,10 +40,10 @@ const TILES = [
 ];
 
 const LAWS = [
-  { n: "01", t: "One concept, pushed far.", d: "A sentence a designer could say out loud. Every section answers to it.", bg: "var(--brand)", fg: "#fff" },
+  { n: "01", t: "One concept, pushed far.", d: "A sentence a designer could say out loud. Every section answers to it.", bg: "var(--brand)", fg: "var(--brand-foreground)" },
   { n: "02", t: "Timing is a token.", d: "Expo-out, 24px travel, 80ms stagger. Tuned once, used everywhere.", bg: "#ffe800", fg: "#1b1e29" },
   { n: "03", t: "Springs for touch.", d: "Tweens are for arrivals. Anything a hand moves gets physics.", bg: "#0078bf", fg: "#fff" },
-  { n: "04", t: "Reduce, never remove.", d: "Reduced motion keeps every word and drops the travel.", bg: "oklch(0.965 0.012 85)", fg: "#1b1e29" },
+  { n: "04", t: "Reduce, never remove.", d: "Reduced motion keeps every word and drops the travel.", bg: "var(--paper)", fg: "var(--ink)" },
 ];
 
 function Law({ i, law, progress, reduce }: { i: number; law: (typeof LAWS)[number]; progress: MotionValue<number>; reduce: boolean }) {

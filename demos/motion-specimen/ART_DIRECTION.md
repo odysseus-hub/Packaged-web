@@ -10,7 +10,12 @@ premium-site skill. One action: copy the install command.
 **Text type:** Instrument Sans: body 18px, measure 62ch
 **Mono:** JetBrains Mono for plate numbers, token values and captions
 
-**Accent:** `--brand: oklch(0.64 0.25 358)` (fluorescent riso pink) · on-accent `--brand-foreground: oklch(0.99 0.01 358)`
+**Palettes (live-switchable, three tokens each: --paper / --ink / --brand):**
+- **Tangerine × Federal Blue** (default): paper `oklch(0.962 0.018 78)`, ink `oklch(0.27 0.09 262)`, accent `oklch(0.64 0.2 38)`
+- **Fluoro Pink × Blue-Black** (the original): paper `oklch(0.965 0.012 85)`, ink `oklch(0.22 0.02 265)`, accent `oklch(0.64 0.25 358)`
+- **Riso Green × Aubergine**: paper `oklch(0.962 0.016 110)`, ink `oklch(0.26 0.09 300)`, accent `oklch(0.58 0.15 152)`
+
+Contrast checked for all three: ink/paper 13.6–15.7:1, accent/paper 3.3–3.6:1 (large type), paper/ink 13.6–15.7:1 (ink room).
 **Neutrals:** paper `oklch(0.965 0.012 85)` · card `oklch(0.985 0.008 85)` · ink `oklch(0.22 0.02 265)` (riso blue-black) · hairline ink at 14%
 **Theme:** light (paper). Deliberately unlike the two dark demos.
 
@@ -31,7 +36,9 @@ Layers: background halftone field / midground misregistered pink offset on one w
 | 0 | Nav | Kokonut `morphic-navbar` | folds on scroll; paper strip fades in behind it |
 | 00 | Hero | custom WebGL `RisoShader`, `SplitChars`, `MisregWord`, `ScrambleText`, `Magnetic` | two-ink halftone shader: cursor lens + scroll-velocity misregistration; per-letter rise |
 | 01 | Art direction | specimen cards | stagger in view |
+| — | Palette switch | `palette/*`: three-token palettes, View Transition circular wipe from the click | the whole page re-inks from your click |
 | 02–03 | Stagger & springs | `Stagger`, `HoverLift` | replayable cascade, spring hover |
+| 03b | Variable type | `fx/variable-type.tsx` (Bricolage wght/wdth axes) | glyphs swell toward the cursor; idle scanner on touch |
 | 04 | Layout | `layoutId`, `AnimatePresence popLayout`, `LayoutGroup` | swatch morphs into the panel; filter pill glides; grid reflows |
 | 05 | Physics | Motion `drag`, Kokonut `cradle-text` | throwable stickers, elastic bounds |
 | 05b | Product in 3D | three.js + React Three Fiber + drei: lathe-turned can, canvas-printed riso labels, Lightformer studio env, contact shadow, instanced bubbles | pinned scroll spins the can; flavor flips re-print the label; stage floods per flavor; drag-to-throw momentum; pointer tilt |

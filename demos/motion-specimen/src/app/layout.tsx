@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Bricolage_Grotesque, Instrument_Sans, JetBrains_Mono } from "next/font/google";
 import { MotionProvider } from "@/components/motion/motion-provider";
 import { SmoothScroll } from "@/components/motion/smooth-scroll";
+import { PALETTE_BOOT } from "@/components/palette/palettes";
 import "lenis/dist/lenis.css";
 import "./globals.css";
 
@@ -21,10 +22,15 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
+    // suppressHydrationWarning: the boot script sets data-palette before React hydrates.
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${display.variable} ${sans.variable} ${mono.variable} antialiased`}
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: PALETTE_BOOT }} />
+      </head>
       <body className="bg-background font-sans text-foreground">
         <SmoothScroll navOffset={72} />
         <MotionProvider>{children}</MotionProvider>

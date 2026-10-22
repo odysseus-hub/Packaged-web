@@ -10,8 +10,9 @@ description: >-
   that looks premium, polished, cinematic, award-worthy, "like Linear/Vercel/Apple", or "not
   generic" — even if they only say "make me a landing page", "build a homepage for my product",
   or "I need a marketing site", and even if they never name the libraries. Also use when
-  restyling an existing Next.js marketing page to feel premium. Hands scroll-linked polish
-  (smooth scroll, parallax, pinning) to the flowy skill.
+  restyling an existing Next.js marketing page to feel premium, or when they ask for "more motion",
+  VFX, shaders, a 3D product spin ("like a spinning soda can"), kinetic type or theme/palette
+  switching. Hands scroll-linked polish (smooth scroll, parallax, pinning) to the flowy skill.
 ---
 
 # Premium Site
@@ -54,10 +55,14 @@ and state it. Don't stall on questions you can answer with taste.
 ### 2. Scaffold (scripted, about 2 minutes)
 
 ```bash
-bash <skill>/scripts/scaffold.sh <dir> [--dark] \
+bash <skill>/scripts/scaffold.sh <dir> [--dark] [--fx] [--3d] \
   --kokonut "background-paths particle-button" \
   --bklit "area-chart bar-chart"
 ```
+
+`--fx` copies the signature-effects library (`assets/fx/` and `assets/palette/`) into
+`src/components/`. `--3d` installs three.js + React Three Fiber and copies the product-scene
+templates (`assets/3d/`). Add each only when the art direction calls for it.
 
 The script runs create-next-app, `shadcn init`, adds the `@kokonutui` and `@bklit`
 registries, and installs `motion`. It also:
@@ -101,6 +106,21 @@ of thumb:
   cancel out.
 - **Charts are proof, not decoration.** Use Bklit where a number is the argument (growth,
   speed, conversion), with a headline that says what the chart proves.
+- **Choose the signature moment from the effects library.** `references/vfx-recipes.md` lists
+  tested effects:
+  - a shader hero
+  - kinetic and variable type
+  - layout morphs
+  - throwable physics
+  - scroll-drawn lines
+  - an ink-flood section transition
+  - 3D tilt and stacking cards
+  - a live palette swap
+  - a scroll-pinned 3D product (`references/3d-product.md`)
+
+  Pick the **one** that serves the concept, and maybe one quieter supporting effect. Check
+  `references/design-trends.md` for what currently reads as fresh or dated: 3D should tie to
+  scroll, not float in the hero.
 
 ### 4. Build with the motion rules
 
@@ -124,7 +144,13 @@ Read `references/motion-rules.md` before writing animation code. In short:
   `usePrefersReducedMotion()` from the primitives. Better still, keep the markup identical and
   resolve motion values to their resting state. Motion's `useReducedMotion()` is fine for
   choosing animation targets, but branching markup on it causes React hydration error #418.
-- **Only transform and opacity animate.** Never width, height, top, left or margin.
+- **Only transform and opacity animate.** Never width, height, top, left or margin. The one
+  contained exception is variable-font axes on a single display line (`fx/variable-type.tsx`).
+- **Every loop is gated.** Shaders, canvases and 3D render on Motion's frame loop or R3F's own,
+  pause offscreen, and fall back to one still frame under reduced motion.
+- **Palettes are three tokens.** Define `--paper`, `--ink` and `--brand`, and derive everything
+  else with `color-mix()`. Recoloring, inverted sections and live palette swaps then come
+  for free.
 
 ### 5. Hand off scroll-linked polish to flowy
 
@@ -190,3 +216,6 @@ Finish with a short report:
 | Bklit chart API, theming to the accent, in-view reveal | `references/bklit-charts.md` |
 | What to hand flowy and how to keep one animation clock | `references/flowy-handoff.md` |
 | Vercel CLI / Git deploy, env, domains, checks | `references/deploy-vercel.md` |
+| Signature effects: shader hero, kinetic and variable type, morphs, physics, flood, tilt, stack, palette swap | `references/vfx-recipes.md` |
+| Scroll-pinned 3D product (three.js + R3F): modeling, materials, choreography, mobile, gotchas | `references/3d-product.md` |
+| What reads as fresh vs. dated in 2026 (research with sources) | `references/design-trends.md` |

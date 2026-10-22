@@ -1,6 +1,7 @@
 "use client";
 
 import { MaskedLines, Stagger, StaggerItem } from "@/components/motion/reveal";
+import { usePalette } from "@/components/palette/use-palette";
 import { Container, PlateLabel } from "./plate";
 
 const SPACING = [
@@ -11,6 +12,7 @@ const SPACING = [
 ];
 
 export function PlateArt() {
+  const palette = usePalette();
   return (
     <section id="art" className="section-pad">
       <Container>
@@ -25,8 +27,9 @@ export function PlateArt() {
             />
             <p className="mt-8 max-w-[44ch] text-lg leading-relaxed text-muted-foreground text-pretty">
               Every site starts as a sentence a designer could say out loud. This one is
-              <em className="text-foreground"> a risograph specimen book</em>: paper stock, blue-black ink,
-              one fluorescent pink pass printed slightly off-register.
+              <em className="text-foreground"> a risograph specimen book</em>: paper stock, one dark ink and one
+              fluorescent pass printed slightly off-register. Swap the inks with the dots in the nav: every color on the
+              page is derived from three tokens.
             </p>
           </div>
 
@@ -48,7 +51,8 @@ export function PlateArt() {
               <div className="h-28 bg-brand" />
               <div className="p-6 font-mono text-[11px] uppercase tracking-[0.14em]">
                 <p className="text-foreground">--brand</p>
-                <p className="mt-1 normal-case tracking-normal text-muted-foreground">oklch(0.64 0.25 358)</p>
+                <p className="mt-1 normal-case tracking-normal text-muted-foreground">{palette.brand}</p>
+                <p className="mt-1 normal-case tracking-normal text-muted-foreground">{palette.name}</p>
                 <p className="mt-4 normal-case tracking-normal text-muted-foreground">Under 10% of any screen.</p>
               </div>
             </StaggerItem>

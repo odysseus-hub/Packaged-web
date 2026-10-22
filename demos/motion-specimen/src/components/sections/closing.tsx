@@ -4,6 +4,7 @@ import { motion, stagger } from "motion/react";
 import ParticleButton from "@/components/kokonutui/particle-button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Magnetic } from "@/components/motion/hover";
+import { usePalette } from "@/components/palette/use-palette";
 import { MaskedLines, Reveal } from "@/components/motion/reveal";
 import { Container, PlateLabel } from "./plate";
 
@@ -102,6 +103,7 @@ export function Install() {
 }
 
 export function Footer() {
+  const palette = usePalette();
   return (
     <footer className="overflow-hidden pt-20">
       <Container className="grid grid-cols-1 gap-8 font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground sm:grid-cols-3">
@@ -111,7 +113,7 @@ export function Footer() {
         </div>
         <div>
           <p className="text-foreground">Inks</p>
-          <p className="mt-2 normal-case tracking-normal">Blue-black oklch(0.22 0.02 265) · Fluorescent pink oklch(0.64 0.25 358)</p>
+          <p className="mt-2 normal-case tracking-normal">{palette.name}: ink {palette.ink} · accent {palette.brand}</p>
         </div>
         <div>
           <p className="text-foreground">Built with</p>

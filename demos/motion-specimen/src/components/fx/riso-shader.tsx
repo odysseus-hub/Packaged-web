@@ -142,12 +142,22 @@ export function RisoShader({ className }: { className?: string }) {
       res: u("u_res"), time: u("u_time"), mouse: u("u_mouse"), bloom: u("u_bloom"),
       skew: u("u_skew"), cell: u("u_cell"), paper: u("u_paper"), pink: u("u_pink"), ink: u("u_ink"),
     };
-    const root = getComputedStyle(document.documentElement);
-    gl.uniform3fv(U.paper, cssColor(root.getPropertyValue("--background").trim() || "#f6f1e8"));
-    gl.uniform3fv(U.pink, cssColor(root.getPropertyValue("--brand").trim() || "#e8178f"));
-    gl.uniform3fv(U.ink, cssColor(root.getPropertyValue("--foreground").trim() || "#1b1e29"));
+    // Inks come from the page tokens, and are re-read whenever the palette changes.
+    const applyInks = () => {
+      const root = getComputedStyle(document.documentElement);
+      gl.uniform3fv(U.paper, cssColor(root.getPropertyValue("--paper").trim() || "white"));
+      gl.uniform3fv(U.pink, cssColor(root.getPropertyValue("--brand").trim() || "magenta"));
+      gl.uniform3fv(U.ink, cssColor(root.getPropertyValue("--ink").trim() || "black"));
+    };
+    applyInks();
+    const paletteWatch = new MutationObserver(() => {
+      applyInks();
+      if (reduceNow()) draw(12.0); // no loop running: repaint the still frame
+    });
+    paletteWatch.observe(document.documentElement, { attributes: true, attributeFilter: ["data-palette"] });
 
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduceNow = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduce = reduceNow();
     const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
     let w = 0, h = 0;
     const resize = () => {
@@ -196,6 +206,7 @@ export function RisoShader({ className }: { className?: string }) {
       draw(12.0);
       canvas.style.opacity = "1";
       return () => {
+        paletteWatch.disconnect();
         io.disconnect();
         ro.disconnect();
         window.removeEventListener("pointermove", onMove);
@@ -218,6 +229,7 @@ export function RisoShader({ className }: { className?: string }) {
     requestAnimationFrame(() => (canvas.style.opacity = "1"));
 
     return () => {
+      paletteWatch.disconnect();
       cancelFrame(loop);
       io.disconnect();
       ro.disconnect();

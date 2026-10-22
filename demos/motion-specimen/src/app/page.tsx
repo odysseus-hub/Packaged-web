@@ -13,6 +13,7 @@ import { PlateReduced } from "@/components/sections/plate-reduced";
 import { PlateSoda } from "@/components/sections/plate-soda";
 import { PlateTiming } from "@/components/sections/plate-timing";
 import { PlateToybox } from "@/components/sections/plate-toybox";
+import { PlateType } from "@/components/sections/plate-type";
 
 // Server component composing client sections: static HTML, per-section hydration.
 export default function Page() {
@@ -25,6 +26,7 @@ export default function Page() {
         <Hero />
         <PlateArt />
         <PlateTiming />
+        <PlateType />
         <PlateLayout />
         <PlatePhysics />
         <PlateSoda />

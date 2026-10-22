@@ -197,38 +197,92 @@
   }
 }
 /* ── Motion Specimen tokens (ART_DIRECTION.md) ─────────────────────────────────────────── */
+/* Three base inks per palette. Every other color is derived from them with color-mix(), so a
+   palette swap is one attribute on <html>: data-palette="tangerine|riso-pink|fern". */
 @theme inline {
   --color-brand: var(--brand);
   --color-brand-foreground: var(--brand-foreground);
-  --color-paper: var(--background);
-  --color-ink: var(--foreground);
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+}
+
+:root,
+[data-palette="tangerine"] {
+  --paper: oklch(0.962 0.018 78);
+  --ink: oklch(0.27 0.09 262);
+  --brand: oklch(0.64 0.2 38);
+  --brand-foreground: oklch(0.99 0.01 78);
+}
+[data-palette="riso-pink"] {
+  --paper: oklch(0.965 0.012 85);
+  --ink: oklch(0.22 0.02 265);
+  --brand: oklch(0.64 0.25 358);
+  --brand-foreground: oklch(0.99 0.01 358);
+}
+[data-palette="fern"] {
+  --paper: oklch(0.962 0.016 110);
+  --ink: oklch(0.26 0.09 300);
+  --brand: oklch(0.58 0.15 152);
+  --brand-foreground: oklch(0.99 0.01 110);
 }
 
 :root {
-  --brand: oklch(0.64 0.25 358);
-  --brand-foreground: oklch(0.99 0.01 358);
-  --background: oklch(0.965 0.012 85);
-  --foreground: oklch(0.22 0.02 265);
-  --card: oklch(0.985 0.008 85);
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --card: color-mix(in oklch, var(--paper), white 50%);
   --card-foreground: var(--foreground);
-  --popover: oklch(0.985 0.008 85);
+  --popover: var(--card);
   --popover-foreground: var(--foreground);
-  --muted: oklch(0.93 0.014 85);
-  --muted-foreground: oklch(0.46 0.02 265);
-  --border: oklch(0.22 0.02 265 / 14%);
-  --input: oklch(0.22 0.02 265 / 20%);
+  --muted: color-mix(in oklch, var(--paper), var(--ink) 5%);
+  --muted-foreground: color-mix(in oklch, var(--ink) 74%, var(--paper));
+  --border: color-mix(in oklch, var(--ink) 14%, transparent);
+  --input: color-mix(in oklch, var(--ink) 20%, transparent);
   --primary: var(--brand);
   --primary-foreground: var(--brand-foreground);
   --ring: var(--brand);
   --chart-1: var(--brand);
   --chart-line-primary: var(--brand);
-  --chart-line-secondary: oklch(0.22 0.02 265 / 30%);
-  --chart-grid: oklch(0.22 0.02 265 / 8%);
+  --chart-line-secondary: color-mix(in oklch, var(--ink) 30%, transparent);
+  --chart-grid: color-mix(in oklch, var(--ink) 8%, transparent);
   --chart-crosshair: var(--brand);
   --chart-foreground-muted: var(--muted-foreground);
 }
 
-/* Riso misregistration: a pink plate printed slightly off-register. One word per headline. */
+/* Palette swap: a View Transition with a circular ink wipe from the click point (JS drives the
+   clip-path). Default crossfade disabled so only the wipe shows. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* Native CSS scroll-driven animation (no JS): plate rules draw themselves as they enter. */
+.rule-draw {
+  position: relative;
+}
+.rule-draw::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: var(--border);
+  transform-origin: left;
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .rule-draw::before {
+      animation: rule-draw linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 35%;
+    }
+  }
+}
+@keyframes rule-draw {
+  from { transform: scaleX(0); background: var(--brand); }
+  to { transform: scaleX(1); }
+}
+
+/* Riso misregistration: the accent plate printed slightly off-register. One word per headline. */
 .misreg {
   color: var(--foreground);
   text-shadow: 0.045em 0.035em 0 var(--brand);
@@ -264,14 +318,14 @@ body::before {
   }
 }
 
-/* The ink room: same tokens, inverted. Paper type printed on blue-black stock. */
+/* The ink room: same tokens, inverted. Paper type printed on ink stock. */
 .ink-room {
-  --background: oklch(0.2 0.02 265);
-  --foreground: oklch(0.965 0.012 85);
-  --card: oklch(0.255 0.022 265);
-  --muted: oklch(0.24 0.02 265);
-  --muted-foreground: oklch(0.76 0.015 85);
-  --border: oklch(0.965 0.012 85 / 14%);
+  --background: var(--ink);
+  --foreground: var(--paper);
+  --card: color-mix(in oklch, var(--ink), white 7%);
+  --muted: color-mix(in oklch, var(--ink), white 4%);
+  --muted-foreground: color-mix(in oklch, var(--paper) 76%, var(--ink));
+  --border: color-mix(in oklch, var(--paper) 14%, transparent);
   color: var(--foreground);
 }
 .ink-room .misreg {

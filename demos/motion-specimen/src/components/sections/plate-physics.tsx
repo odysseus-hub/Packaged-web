@@ -79,7 +79,7 @@ export function PlatePhysics() {
           ref={sheet}
           className="relative mt-10 h-[460px] overflow-hidden rounded-[32px] border-2 border-dashed border-foreground/25 bg-card sm:h-[520px]"
         >
-          <div aria-hidden className="absolute inset-0 bg-[radial-gradient(circle,oklch(0.22_0.02_265/0.12)_1px,transparent_1.5px)] [background-size:22px_22px]" />
+          <div aria-hidden className="absolute inset-0 bg-[radial-gradient(circle,color-mix(in_oklch,var(--ink)_12%,transparent)_1px,transparent_1.5px)] [background-size:22px_22px]" />
           <p className="absolute bottom-5 right-6 font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
             Sticker sheet · drag &amp; throw
           </p>

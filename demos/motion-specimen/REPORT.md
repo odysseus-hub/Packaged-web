@@ -3,12 +3,15 @@
 A showreel built with the premium-site skill. Every plate demonstrates a motion feature, live.
 Watch `shots/soda-can.mp4` (the 3D can, 35s) and `shots/walkthrough.mp4`: a 76-second scripted run through the real build, recorded in headless Chromium.
 
-- **Concept:** a risograph-printed specimen book for motion. Light paper stock, blue-black ink, one fluorescent pink.
+- **Concept:** a risograph-printed specimen book for motion. Default inks are now Tangerine × Federal Blue, switchable live to Fluoro Pink or Riso Green from the nav.
 - **Type:** Bricolage Grotesque · Instrument Sans · JetBrains Mono. **Accent:** `--brand: oklch(0.64 0.25 358)`.
 
 ## Effects (Motion's free package, a raw WebGL shader, and three.js / R3F for the product scene)
 | Effect | Where | How |
 |---|---|---|
+| **Live palette swap** | Nav | Three ink sets as `[data-palette]` tokens with everything derived through `color-mix()`. `startViewTransition` plus a `clip-path` circle that grows from the click point. The shader re-reads its inks. The choice persists, with a pre-paint boot script. Instant swap under reduced motion. |
+| **Variable type** | Plate 03b | Per-glyph `wght`/`wdth` springs from pointer distance, with an idle scanner for touch. Contained to one display block. |
+| **CSS-only scroll animation** | Every plate rule | `animation-timeline: view()` draws each rule in, with no JS. Guarded by `@supports` and reduced motion. |
 | **3D soda can** | Plate 05b | three.js + React Three Fiber + drei. Lathe-turned aluminum body, a riso label printed to a canvas texture per flavor, a clearcoat, a Lightformer studio environment (no network HDRs), a contact shadow and 70 instanced bubbles. The pinned 400svh scroll spins it. Each third flips it a full turn, re-prints the label and floods the stage color while the giant flavor name slides behind. Drag adds spin with decaying momentum, and the pointer tilts it. An aspect-aware camera keeps it composed on phones. Loaded with `next/dynamic` (`ssr: false`), and rendering stops when it's offscreen. |
 | GPU riso halftone field | Hero | Fragment shader: domain-warped fbm → two rotated halftone screens, multiply-printed. Cursor lens + ink bloom; scroll velocity knocks the plates off-register. Runs on Motion's `frame.render` (one clock). Pauses offscreen. |
 | Per-letter reveal | Hero h1 | `SplitChars`: per-glyph clip + y/rotate, staggered via `delayChildren: stagger()` |

@@ -55,10 +55,10 @@ Where things land:
    files may still import `cn` from the `cn` package while everything else imports
    `@/lib/utils`. Both work, and it's harmless. Pass `</dev/null` to any `shadcn add`
    in scripts, so a surprise prompt fails fast instead of hanging.
-2. **Bklit CSS vars are double-prefixed.** The CLI writes `--color-chart-grid: var(----chart-grid)`
+2. **Bklit CSS vars were double-prefixed** (fixed upstream by 2026-10-22; the patch is now a no-op, kept for older registry snapshots). The CLI writes `--color-chart-grid: var(----chart-grid)`
    into `@theme inline`. Because the vars are undefined, chart grid, label and tooltip colors fail
    silently. Fix: `sed -i 's/var(----/var(--/g' src/app/globals.css`.
-3. **Bklit `chart-loading-label.tsx` has a monorepo import.** It uses
+3. **Bklit `chart-loading-label.tsx` had a monorepo import** (fixed upstream by 2026-10-22 to `"../shimmering-text"`; the patch is a no-op now). It uses
    `"../components/shimmering-text"`, which causes "Module not found" at build. Fix: use
    `"@/components/shimmering-text"`.
 4. **Kokonut and shadcn use class-based dark mode** (`@custom-variant dark (&:is(.dark *))`).
@@ -102,6 +102,12 @@ Where things land:
 12. **Remote images** need `images.remotePatterns` in `next.config.ts` (e.g. `images.unsplash.com`).
    Prefer local files in `public/` for hero imagery: they're faster, and no outside host can
    break your hero.
+
+## Optional: 3D (three.js + React Three Fiber)
+`scaffold.sh --3d`, or by hand:
+`npm i three@0.186.1 @react-three/fiber@9.8.2 @react-three/drei@10.7.9 && npm i -D @types/three@0.186.0`.
+Fiber 9.8 peers on `react >=19 <19.4`. Load scenes with `next/dynamic(..., { ssr: false })`.
+Details: `references/3d-product.md`.
 
 ## Motion essentials (motion.dev)
 

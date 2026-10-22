@@ -2,7 +2,9 @@
 # Scaffold a premium-site project: Next.js (App Router, TS, Tailwind v4) + shadcn/ui
 # + Motion + Kokonut UI + Bklit UI registries, with the known registry gotchas patched.
 #
-# Usage: bash scaffold.sh <project-dir> [--dark] [--kokonut "a b c"] [--bklit "x y"] [--lenis]
+# Usage: bash scaffold.sh <project-dir> [--dark] [--fx] [--3d] [--kokonut "a b c"] [--bklit "x y"] [--lenis]
+#   --fx          copy the signature-effects library (assets/fx, assets/palette) into src/components
+#   --3d          install three.js + React Three Fiber + drei and copy the product-scene templates
 #   --dark        put class="dark" on <html> (shadcn + Kokonut use the .dark class variant)
 #   --kokonut     space-separated Kokonut component names to install (e.g. "background-paths particle-button")
 #   --bklit       space-separated Bklit chart names to install (e.g. "area-chart bar-chart")
@@ -13,13 +15,15 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 DIR="${1:?project dir required}"; shift || true
-DARK=0; KOKONUT=""; BKLIT=""; LENIS=0
+DARK=0; KOKONUT=""; BKLIT=""; LENIS=0; FX=0; THREE=0
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --dark) DARK=1 ;;
     --kokonut) KOKONUT="$2"; shift ;;
     --bklit) BKLIT="$2"; shift ;;
     --lenis) LENIS=1 ;;
+    --fx) FX=1 ;;
+    --3d) THREE=1 ;;
     *) echo "unknown flag $1" >&2; exit 2 ;;
   esac
   shift
@@ -76,6 +80,27 @@ for f in "$SCRIPT_DIR/../assets/motion/"*.ts*; do
   [[ -e "src/components/motion/$(basename "$f")" ]] || cp "$f" src/components/motion/
 done
 if [[ $LENIS == 0 ]]; then rm -f src/components/motion/smooth-scroll.tsx; fi  # needs lenis; flowy adds it
+
+if [[ $FX == 1 ]]; then
+  echo "• fx library → src/components/fx, src/components/palette"
+  mkdir -p src/components/fx src/components/palette
+  for d in fx palette; do
+    for f in "$SCRIPT_DIR/../assets/$d/"*; do
+      [[ -e "src/components/$d/$(basename "$f")" ]] || cp "$f" "src/components/$d/"
+    done
+  done
+fi
+
+if [[ $THREE == 1 ]]; then
+  # Verified 2026-10-22: fiber 9.8 peers on react >=19 <19.4.
+  echo "• 3d: three + @react-three/fiber + drei, templates → src/components/3d"
+  npm i three@0.186.1 @react-three/fiber@9.8.2 @react-three/drei@10.7.9 >/dev/null 2>&1
+  npm i -D @types/three@0.186.0 >/dev/null 2>&1
+  mkdir -p src/components/3d
+  for f in "$SCRIPT_DIR/../assets/3d/"*; do
+    [[ -e "src/components/3d/$(basename "$f")" ]] || cp "$f" src/components/3d/
+  done
+fi
 
 # eslint-config-next 16's React-Compiler hook rules fail freshly installed Bklit/Kokonut code
 # (30-60 errors, none in your code). Lint vendored registry folders leniently; keep yours strict.
