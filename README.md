@@ -10,6 +10,7 @@ the `flowy` skill. Install the packaged version from `dist/premium-site.skill`.
 Two sites built with the skill during testing (each deploys on Vercel with its folder as Root Directory):
 - `demos/nocturne-cinematic-dark` — cinematic dark hero site ("opening titles of a film")
 - `demos/relay-product-landing` — bold product landing page ("emergency broadcast for your API")
+- `demos/motion-specimen` — showcase of every skill feature: a risograph specimen book where each plate demonstrates the rule it prints (19/19 on the eval grader)
 
 Deploy: `cd demos/<name> && npx vercel --prod`.
 
