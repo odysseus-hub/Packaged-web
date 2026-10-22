@@ -10,6 +10,7 @@ import { PlateMap } from "@/components/sections/plate-map";
 import { PlatePhysics } from "@/components/sections/plate-physics";
 import { PlateProof } from "@/components/sections/plate-proof";
 import { PlateReduced } from "@/components/sections/plate-reduced";
+import { PlateSoda } from "@/components/sections/plate-soda";
 import { PlateTiming } from "@/components/sections/plate-timing";
 import { PlateToybox } from "@/components/sections/plate-toybox";
 
@@ -26,6 +27,7 @@ export default function Page() {
         <PlateTiming />
         <PlateLayout />
         <PlatePhysics />
+        <PlateSoda />
         <PlateLine />
         <InkRoom />
         <PlateProof />

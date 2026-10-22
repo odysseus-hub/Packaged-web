@@ -1,14 +1,15 @@
 # Motion Specimen v2: deliverable report
 
 A showreel built with the premium-site skill. Every plate demonstrates a motion feature, live.
-Watch `shots/walkthrough.mp4`: a 76-second scripted run through the real build, recorded in headless Chromium.
+Watch `shots/soda-can.mp4` (the 3D can, 35s) and `shots/walkthrough.mp4`: a 76-second scripted run through the real build, recorded in headless Chromium.
 
 - **Concept:** a risograph-printed specimen book for motion. Light paper stock, blue-black ink, one fluorescent pink.
 - **Type:** Bricolage Grotesque · Instrument Sans · JetBrains Mono. **Accent:** `--brand: oklch(0.64 0.25 358)`.
 
-## Effects (all built on Motion's free package plus a raw WebGL shader; no new runtime deps besides lenis)
+## Effects (Motion's free package, a raw WebGL shader, and three.js / R3F for the product scene)
 | Effect | Where | How |
 |---|---|---|
+| **3D soda can** | Plate 05b | three.js + React Three Fiber + drei. Lathe-turned aluminum body, a riso label printed to a canvas texture per flavor, a clearcoat, a Lightformer studio environment (no network HDRs), a contact shadow and 70 instanced bubbles. The pinned 400svh scroll spins it. Each third flips it a full turn, re-prints the label and floods the stage color while the giant flavor name slides behind. Drag adds spin with decaying momentum, and the pointer tilts it. An aspect-aware camera keeps it composed on phones. Loaded with `next/dynamic` (`ssr: false`), and rendering stops when it's offscreen. |
 | GPU riso halftone field | Hero | Fragment shader: domain-warped fbm → two rotated halftone screens, multiply-printed. Cursor lens + ink bloom; scroll velocity knocks the plates off-register. Runs on Motion's `frame.render` (one clock). Pauses offscreen. |
 | Per-letter reveal | Hero h1 | `SplitChars`: per-glyph clip + y/rotate, staggered via `delayChildren: stagger()` |
 | Misregistration on cursor | "by the" | Two plates, pink one on springs following the pointer |
@@ -26,6 +27,7 @@ Watch `shots/walkthrough.mp4`: a 76-second scripted run through the real build, 
 | Spring wordmark | Footer | Per-letter rise and hover hop |
 
 ## Reduced motion
+The can becomes a still hero shot: no spin, no flips, no bubble drift. The chips swap flavors instantly in a normal-height section.
 The shader prints one still frame. The flood rests fully open. All words are lit. Cards don't recede. The pin becomes a grid.
 Lenis, the marquee, the skew, the cursor, the misregistration drift and the blob morph all stand down. Verified with a full reduced-motion tour.
 

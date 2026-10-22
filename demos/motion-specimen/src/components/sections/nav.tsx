@@ -8,9 +8,9 @@ const ITEMS = {
   "#art": { name: "Art" },
   "#layout": { name: "Layout" },
   "#physics": { name: "Physics" },
+  "#soda": { name: "3D" },
   "#ink": { name: "Ink room" },
   "#proof": { name: "Proof" },
-  "#toybox": { name: "Toybox" },
 };
 
 export function Nav() {

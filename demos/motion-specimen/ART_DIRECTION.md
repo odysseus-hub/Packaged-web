@@ -34,6 +34,7 @@ Layers: background halftone field / midground misregistered pink offset on one w
 | 02–03 | Stagger & springs | `Stagger`, `HoverLift` | replayable cascade, spring hover |
 | 04 | Layout | `layoutId`, `AnimatePresence popLayout`, `LayoutGroup` | swatch morphs into the panel; filter pill glides; grid reflows |
 | 05 | Physics | Motion `drag`, Kokonut `cradle-text` | throwable stickers, elastic bounds |
+| 05b | Product in 3D | three.js + React Three Fiber + drei: lathe-turned can, canvas-printed riso labels, Lightformer studio env, contact shadow, instanced bubbles | pinned scroll spins the can; flavor flips re-print the label; stage floods per flavor; drag-to-throw momentum; pointer tilt |
 | 06 | Line work | SVG `pathLength`, `d` morph | scroll-drawn ribbon; morphing blob |
 | 07 | Ink room | `useMotionTemplate` clip-path flood, `ScrollWords`, `TiltCard`, sticky stack, pinned row, velocity band | page floods to ink; words ink in; 3D glare; laws stack; scrubbed pin |
 | 08 | Proof | `CountUp`, Bklit bar / gauge / area / live-line | charts reveal in view; live feed streams while visible |
