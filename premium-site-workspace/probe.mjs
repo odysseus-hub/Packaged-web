@@ -51,7 +51,9 @@ try {
   await walk(page, 844);
   Object.assign(res, await page.evaluate(() => ({
     mobileScrollWidth: document.documentElement.scrollWidth,
-    mobileOverflow: document.documentElement.scrollWidth > window.innerWidth + 1,
+    // Compare to the DEVICE width (390), not innerWidth: with isMobile, Chromium widens the
+    // layout viewport to fit overflowing content, so scrollWidth === innerWidth even when broken.
+    mobileOverflow: document.documentElement.scrollWidth > 391,
   })));
   await ctx.close();
   // hidden text: normal vs reduced motion — only flag text hidden ONLY under reduced motion
