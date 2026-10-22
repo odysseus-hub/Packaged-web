@@ -1,18 +1,16 @@
 ---
 name: premium-site
 description: >-
-  Build high-end, animated marketing websites — landing pages, product launches, studio and
-  portfolio sites, SaaS homepages, waitlists — on Next.js + Tailwind + shadcn/ui, with Motion
-  (motion.dev) for animation, Kokonut UI for animated components, Bklit UI for charts, deployed
-  to Vercel. Covers art direction (one bold concept, display type, hero imagery, a single accent,
-  generous spacing), motion rules (staggers, spring hovers, scroll reveals, reduced motion) and
-  which component to use for each section. Use whenever someone wants a site or landing page
-  that looks premium, polished, cinematic, award-worthy, "like Linear/Vercel/Apple", or "not
-  generic" — even if they only say "make me a landing page", "build a homepage for my product",
-  or "I need a marketing site", and even if they never name the libraries. Also use when
-  restyling an existing Next.js marketing page to feel premium, or when they ask for "more motion",
-  VFX, shaders, a 3D product spin ("like a spinning soda can"), kinetic type or theme/palette
-  switching. Hands scroll-linked polish (smooth scroll, parallax, pinning) to the flowy skill.
+  Build high-end animated marketing websites (landing pages, product launches, studio and
+  portfolio sites, SaaS homepages) on Next.js + Tailwind + shadcn/ui, with Motion for animation,
+  Kokonut UI components, Bklit UI charts and Vercel deploys. Covers art direction (one bold
+  concept, display type, hero imagery, one accent, spacing), motion rules, a section-to-component
+  map, and a tested effects library: shader heroes, kinetic and variable type, layout morphs,
+  physics, ink-flood transitions, live palette swaps and scroll-pinned 3D products. Use whenever
+  someone wants a site that looks premium, cinematic, award-worthy or "not generic", even if they
+  only say "make me a landing page" or never name the libraries; also when they ask for more
+  motion, VFX, shaders, a 3D product spin or a palette switch. Hands scroll-linked polish to
+  the flowy skill.
 ---
 
 # Premium Site
