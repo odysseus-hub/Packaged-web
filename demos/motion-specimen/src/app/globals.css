@@ -263,3 +263,17 @@ body::before {
     animation: none;
   }
 }
+
+/* The ink room: same tokens, inverted. Paper type printed on blue-black stock. */
+.ink-room {
+  --background: oklch(0.2 0.02 265);
+  --foreground: oklch(0.965 0.012 85);
+  --card: oklch(0.255 0.022 265);
+  --muted: oklch(0.24 0.02 265);
+  --muted-foreground: oklch(0.76 0.015 85);
+  --border: oklch(0.965 0.012 85 / 14%);
+  color: var(--foreground);
+}
+.ink-room .misreg {
+  color: var(--foreground);
+}

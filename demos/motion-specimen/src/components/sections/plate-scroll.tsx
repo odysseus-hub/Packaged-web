@@ -9,9 +9,7 @@ import {
   useVelocity,
 } from "motion/react";
 import { useEffect, useRef } from "react";
-import { usePrefersReducedMotion } from "@/components/motion/use-prefers-reduced-motion";
 import { cn } from "@/lib/utils";
-import { Container, PlateLabel } from "./plate";
 
 const SCENES = [
   { k: "Inertia", d: "Lenis on Motion's frame loop: one clock, so useScroll reads this frame's position." },
@@ -23,7 +21,7 @@ const SCENES = [
 
 const WORDS = ["Arrive", "Settle", "Respond", "Breathe", "Release", "Print"];
 
-function PinnedRow({ reduce }: { reduce: boolean }) {
+export function PinnedRow({ reduce }: { reduce: boolean }) {
   const section = useRef<HTMLDivElement>(null);
   const track = useRef<HTMLDivElement>(null);
   const travel = useMotionValue(0);
@@ -79,7 +77,7 @@ function PinnedRow({ reduce }: { reduce: boolean }) {
   );
 }
 
-function VelocityBand({ reduce }: { reduce: boolean }) {
+export function VelocityBand({ reduce }: { reduce: boolean }) {
   const { scrollY } = useScroll();
   const v = useVelocity(scrollY);
   const skew = useSpring(useTransform(v, [-2500, 0, 2500], reduce ? [0, 0, 0] : [7, 0, -7]), {
@@ -102,25 +100,5 @@ function VelocityBand({ reduce }: { reduce: boolean }) {
         </div>
       </motion.div>
     </div>
-  );
-}
-
-export function PlateScroll() {
-  const reduce = usePrefersReducedMotion();
-  return (
-    <section id="scroll" className="pt-[clamp(6rem,12vw,11rem)]">
-      <Container>
-        <PlateLabel n="08" name="Scroll, by flowy" rule="Time-based motion is this skill's. Scroll-linked motion is handed to flowy, on the same clock." />
-        <h2 className="mt-14 max-w-[18ch] font-display text-[clamp(2.5rem,5.5vw,4.75rem)] font-extrabold leading-[0.92] tracking-[-0.04em]">
-          Scroll drives the <span className="misreg">scene</span>, not the other way round.
-        </h2>
-      </Container>
-      <div className="mt-14">
-        <PinnedRow reduce={reduce} />
-      </div>
-      <div className="mt-[clamp(4rem,8vw,7rem)]">
-        <VelocityBand reduce={reduce} />
-      </div>
-    </section>
   );
 }

@@ -15,7 +15,7 @@ export function PlateReduced() {
   return (
     <section className="section-pad">
       <Container>
-        <PlateLabel n="09" name="Reduced motion" rule='MotionConfig reducedMotion="user" drops transforms and keeps opacity. Custom loops are gated by hand.' />
+        <PlateLabel n="11" name="Reduced motion" rule='MotionConfig reducedMotion="user" drops transforms and keeps opacity. Custom loops are gated by hand.' />
         <div className="mt-14 grid grid-cols-1 gap-12 lg:grid-cols-12 lg:items-center">
           <div className="min-w-0 lg:col-span-5">
             <h2 className="font-display text-[clamp(2.5rem,5vw,4.25rem)] font-extrabold leading-[0.92] tracking-[-0.04em]">
@@ -23,7 +23,7 @@ export function PlateReduced() {
             </h2>
             <p className="mt-8 max-w-[44ch] text-lg leading-relaxed text-muted-foreground text-pretty">
               Flip the switch to preview what someone with Reduced Motion turned on sees: the same cascade, minus the
-              travel. On this page, the pin, the parallax, the smooth scroll and the marquee also stand down.
+              travel. On this page, the shader freezes to one printed frame, and the pin, parallax, flood, smooth scroll and marquee stand down.
             </p>
           </div>
           <div className="min-w-0 rounded-3xl border border-border bg-card p-6 sm:p-8 lg:col-span-7">

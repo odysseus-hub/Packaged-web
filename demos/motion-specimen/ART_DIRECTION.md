@@ -24,22 +24,25 @@ Layers: background halftone field / midground misregistered pink offset on one w
 **Signature detail:** riso misregistration, a pink offset shadow on exactly one word per display headline.
 **Motion personality:** precise and printerly: expo-out, short travel (12–24px), 60–80ms staggers, snappy springs.
 
-## Section map
-| # | Section | Job | Component(s) | Layout | Motion idea (one) |
-|---|---|---|---|---|---|
-| 0 | Nav | wayfinding | Kokonut `morphic-navbar` (compact) | fixed top | folds after 80px |
-| 1 | Hero / Plate 00 | concept in one screen | Kokonut `dot-field` + `MaskedLines` + `Magnetic` | full-bleed, left-aligned | masked lines rise; content drifts on scroll-away (flowy) |
-| 2 | Plate 01 Art direction | show the decisions | specimen card, swatch, spacing ruler | 5/7 asymmetric split | stagger in view |
-| 3 | Plate 02–03 Stagger & springs | show timing tokens | token cards with `HoverLift`, replay button | 3-col tight grid | cascade (replayable) + spring hover |
-| 4 | Plate 04 Kinetic type | one expressive line | Kokonut `dynamic-text` | single giant line | morphing word |
-| 5 | Plate 05 Proof | numbers as argument | `CountUp`, Bklit `bar-chart`, `gauge-chart`, `area-chart` in `InViewMount` | huge number + 2 charts | charts reveal when seen |
-| 6 | Plate 06 Section map | show component choices | Kokonut `smooth-tab` | centered panel | swipeable tabs |
-| 7 | Plate 07 Verification | show the checks | Kokonut `notification-stack` | 7/5 split | stack fans on hover |
-| 8 | Plate 08 Scroll (flowy) | scroll-linked layer | pinned horizontal track + velocity marquee | full-bleed pinned | scrubbed x + skew |
-| 9 | Plate 09 Reduced motion | accessibility as design | shadcn `Switch` + `MotionConfig` preview | split demo | same cascade, with/without travel |
-| 10 | FAQ | objections | shadcn `Accordion` | narrow column | none |
-| 11 | CTA | install | `MaskedLines` + Kokonut `particle-button` | full-bleed pink | particle burst on copy |
-| 12 | Footer / colophon | credits | giant cropped wordmark | bottom | none |
+## Section map (v2: motion showreel)
+| # | Section | Component(s) | Motion idea |
+|---|---|---|---|
+| — | Chrome | `ScrollProgress`, `InkCursor` | spring progress rule; ink-dot cursor that labels what it's over |
+| 0 | Nav | Kokonut `morphic-navbar` | folds on scroll; paper strip fades in behind it |
+| 00 | Hero | custom WebGL `RisoShader`, `SplitChars`, `MisregWord`, `ScrambleText`, `Magnetic` | two-ink halftone shader: cursor lens + scroll-velocity misregistration; per-letter rise |
+| 01 | Art direction | specimen cards | stagger in view |
+| 02–03 | Stagger & springs | `Stagger`, `HoverLift` | replayable cascade, spring hover |
+| 04 | Layout | `layoutId`, `AnimatePresence popLayout`, `LayoutGroup` | swatch morphs into the panel; filter pill glides; grid reflows |
+| 05 | Physics | Motion `drag`, Kokonut `cradle-text` | throwable stickers, elastic bounds |
+| 06 | Line work | SVG `pathLength`, `d` morph | scroll-drawn ribbon; morphing blob |
+| 07 | Ink room | `useMotionTemplate` clip-path flood, `ScrollWords`, `TiltCard`, sticky stack, pinned row, velocity band | page floods to ink; words ink in; 3D glare; laws stack; scrubbed pin |
+| 08 | Proof | `CountUp`, Bklit bar / gauge / area / live-line | charts reveal in view; live feed streams while visible |
+| 09 | Toybox | Kokonut attract-button, swoosh-text, card-stack, glitch-text, liquid-gauge, dynamic-text | every toy, on purpose |
+| 10 | Section map & verification | Kokonut `smooth-tab`, `notification-stack` | swipe tabs; stack fans |
+| 11 | Reduced motion | `Switch` + nested `MotionConfig` | live preview of the fallback |
+| 12 | FAQ | shadcn `Accordion` | none |
+| 13 | Install | `MaskedLines`, Kokonut `particle-button` | particle burst on copy |
+| — | Footer | per-letter springs | letters rise in, hop on hover |
 
 ## Copy voice
 Precise, printerly, a little dry. Banned: "unlock", "seamless".

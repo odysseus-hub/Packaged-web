@@ -10,6 +10,7 @@ import { Grid } from "@/components/charts/grid";
 import { ChartTooltip } from "@/components/charts/tooltip";
 import { CountUp } from "@/components/motion/count-up";
 import { InViewMount, MaskedLines, Stagger, StaggerItem } from "@/components/motion/reveal";
+import { LiveFeed } from "./live-feed";
 import { Container, PlateLabel } from "./plate";
 
 // Real results from this repo's eval (premium-site-workspace/iteration-{1,2}/benchmark.md):
@@ -37,7 +38,7 @@ export function PlateProof() {
   return (
     <section id="proof" className="section-pad">
       <Container>
-        <PlateLabel n="05" name="Charts as proof" rule="A chart is an argument. It reveals when seen, never off-screen at load." />
+        <PlateLabel n="08" name="Charts as proof" rule="A chart is an argument. It reveals when seen, never off-screen at load." />
 
         <div className="mt-14 grid gap-12 md:grid-cols-12 md:items-end">
           <div className="md:col-span-7">
@@ -98,6 +99,18 @@ export function PlateProof() {
               </AreaChart>
             </InViewMount>
             <p className="mt-3 text-xs text-muted-foreground">Ninety percent of the distance in the first third of the time. That&apos;s the &ldquo;settle.&rdquo;</p>
+          </StaggerItem>
+
+          <StaggerItem className="min-w-0 rounded-3xl border border-border bg-card p-6 lg:col-span-12">
+            <div className="flex flex-wrap items-baseline justify-between gap-3">
+              <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
+                Frame time, live · <span className="text-brand">simulated feed</span> · budget 16.7ms
+              </p>
+              <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground">Bklit live-line-chart · streams only while visible</p>
+            </div>
+            <InViewMount aspect="6 / 1" className="mt-4">
+              <LiveFeed />
+            </InViewMount>
           </StaggerItem>
         </Stagger>
       </Container>

@@ -1,43 +1,49 @@
-# Motion Specimen: deliverable report
+# Motion Specimen v2: deliverable report
 
-A showcase built with the premium-site skill, where every section demonstrates the feature it describes.
+A showreel built with the premium-site skill. Every plate demonstrates a motion feature, live.
+Watch `shots/walkthrough.mp4`: a 76-second scripted run through the real build, recorded in headless Chromium.
 
-- **Concept:** a risograph-printed specimen book for motion. Every plate demonstrates the rule it prints.
-- **Type:** Bricolage Grotesque (display, opsz + wdth) · Instrument Sans (text) · JetBrains Mono (labels)
-- **Accent:** `--brand: oklch(0.64 0.25 358)`, fluorescent riso pink, on paper `oklch(0.965 0.012 85)` and blue-black ink.
-  Light theme, chosen deliberately to differ from the two dark demos (see the convergence note in iteration-2).
+- **Concept:** a risograph-printed specimen book for motion. Light paper stock, blue-black ink, one fluorescent pink.
+- **Type:** Bricolage Grotesque · Instrument Sans · JetBrains Mono. **Accent:** `--brand: oklch(0.64 0.25 358)`.
 
-## Section map: feature shown per plate
-| Plate | Feature demonstrated | Components |
+## Effects (all built on Motion's free package plus a raw WebGL shader; no new runtime deps besides lenis)
+| Effect | Where | How |
 |---|---|---|
-| 00 Hero | generative hero, masked headline, magnetic CTA, scroll-away parallax | Kokonut `dot-field`, `MaskedLines`, `Stagger onMount`, `Magnetic`, `useScroll` |
-| Nav | animated nav that folds on scroll | Kokonut `morphic-navbar` (recolored to brand) |
-| 01 Art direction | concept, type pairing, one accent, spacing rhythm | specimen cards, `Stagger` in view |
-| 02–03 Stagger & springs | motion tokens; replayable cascade; spring hover | `Stagger`/`StaggerItem`, `HoverLift` |
-| 04 Kinetic type | one expressive line | Kokonut `dynamic-text` |
-| 05 Proof | numbers as argument; charts revealed in view | `CountUp`, Bklit `bar-chart`, `gauge-chart`, `area-chart` inside `InViewMount` |
-| 06–07 Section map & verification | component choices; the checks | Kokonut `smooth-tab`, `notification-stack` (recolored) |
-| 08 Scroll (flowy layer) | Lenis on Motion's clock, pinned horizontal scrub, velocity-skew marquee | `SmoothScroll`, `useScroll`/`useTransform`, `useVelocity`/`useSpring` |
-| 09 Reduced motion | live preview of the reduced-motion fallback | shadcn `Switch` + nested `MotionConfig` |
-| 10 FAQ | calm section | shadcn `Accordion` |
-| 11 Install | signature CTA | `MaskedLines`, Kokonut `particle-button` (copies the install command) |
-
-## Data honesty
-- Plate 05 shows real numbers from this repo's eval: 38/38 vs 21/38 checks (round 1), 37/38 vs 21/38 (round 2), +42 pts.
-- The area chart plots the actual `easeOutExpo` curve. The "90% in the first third" caption was computed (90.3%).
-- Plate 07's results are this page's real check results.
+| GPU riso halftone field | Hero | Fragment shader: domain-warped fbm → two rotated halftone screens, multiply-printed. Cursor lens + ink bloom; scroll velocity knocks the plates off-register. Runs on Motion's `frame.render` (one clock). Pauses offscreen. |
+| Per-letter reveal | Hero h1 | `SplitChars`: per-glyph clip + y/rotate, staggered via `delayChildren: stagger()` |
+| Misregistration on cursor | "by the" | Two plates, pink one on springs following the pointer |
+| Text decode | Eyebrows, labels | `ScrambleText` (free re-implementation; Motion+'s is paid) |
+| Shared-element morph | Swatch book | `layoutId` swatch → dialog panel, `LayoutGroup` filter pill, `popLayout` reflow |
+| Throw physics | Sticker sheet | `drag` + `dragConstraints` + `dragElastic` + bounce `dragTransition` |
+| Scroll-drawn line, shape morph | Line work | `pathLength` on a spring; `d` morph between same-structure Bézier blobs |
+| Ink flood | Into the ink room | `clip-path: circle()` scrubbed by scroll via `useMotionTemplate`; token inversion |
+| Scroll-lit words | Ink room | Per-word opacity/y mapped to scroll progress |
+| 3D tilt + glare | Ink room | `rotateX/Y` springs, `translateZ` layers, radial glare via motion template |
+| Stacking cards | Ink room | Sticky stack, receding scale/rotate per card |
+| Pinned horizontal + velocity skew | Ink room | flowy layer: Lenis on `frame.setup`, scrubbed `x`, `useVelocity` skew on a wrapper |
+| Live data | Proof | Bklit `live-line-chart`, streaming only while visible (simulated feed, labeled) |
+| Ink cursor + progress rule | Global | Spring follower (scale-only), labels `[data-cursor]` targets; spring `scaleX` progress |
+| Spring wordmark | Footer | Per-letter rise and hover hop |
 
 ## Reduced motion
-Transforms drop out and opacity stays (MotionConfig "user"). Lenis, the pin, the parallax, the marquee loop and the velocity skew all stand down.
-The pinned row becomes a plain grid, and CountUp shows final values. Render-affecting branches use the hydration-safe `usePrefersReducedMotion()`.
+The shader prints one still frame. The flood rests fully open. All words are lit. Cards don't recede. The pin becomes a grid.
+Lenis, the marquee, the skew, the cursor, the misregistration drift and the blob morph all stand down. Verified with a full reduced-motion tour.
 
 ## Verified
 - `tsc`, `eslint`: clean. `next build`: static.
-- `check_site.py`: 0 fail, 0 warn, 14 pass.
-- `screenshot.mjs`: no console or hydration errors, no overflow. The mobile pass caught a real 3px overflow in the smooth-tab bar, which is now fixed.
-- Grader: 19/19, the same checks as the eval.
-- Reviewing the screenshots fixed: display tracking too tight, Kokonut's orange nav indicator off-brand, an undersized gauge, and a narrow tab panel.
-- A mid-scroll capture confirms the pinned row scrubs horizontally and releases.
+- `check_site.py`: 0 fail, 1 warn. The warn is the 9 riso-ink hex values used as artwork, and the page reports that itself.
+- Eval grader: **19/19**.
+- `screenshot.mjs`: no console or hydration errors, no overflow.
+- Scripted interaction tours, all with zero page errors:
+  - desktop
+  - desktop with reduced motion
+  - 390px mobile (scrollWidth exactly 390)
+- Fixed from visual review:
+  - shader drowning the type (added a knock-out zone)
+  - nav invisible over the ink room (scroll-in strip)
+  - stale cursor labels
+  - flat live chart
+  - off-brand Kokonut colors (navbar indicator, gauge liquid, cradle type)
 
 ## Deploy
-`cd demos/motion-specimen && npx vercel --prod`, or import the repo on Vercel with Root Directory `demos/motion-specimen`.
+`cd demos/motion-specimen && npx vercel --prod`, or import on Vercel with Root Directory `demos/motion-specimen` on branch `claude/premium-site-skill-1qno3a`.

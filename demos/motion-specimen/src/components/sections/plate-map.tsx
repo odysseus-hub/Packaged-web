@@ -44,7 +44,7 @@ const chip = (label: string) => (
 );
 const CHECKS: StackNotification[] = [
   { id: "shots", app: "screenshot.mjs", title: "3 passes, 0 issues", body: "Desktop, 390px mobile and reduced motion. No overflow, no console or hydration errors.", time: "now", icon: chip("SS") },
-  { id: "audit", app: "check_site.py", title: "0 fail · 0 warn", body: "Reduced motion wired, one accent token, a display face, no layout-property animation.", time: "1m", icon: chip("CS") },
+  { id: "audit", app: "check_site.py", title: "0 fail · 1 warn", body: "The warn is 9 hex values: real riso ink swatches painted as artwork, which the rule allows. UI colors are all tokens.", time: "1m", icon: chip("CS") },
   { id: "build", app: "next build", title: "Static, prerendered", body: "Turbopack, Next 16.4. The page ships as static HTML.", time: "2m", icon: chip("NB") },
   { id: "lint", app: "eslint", title: "Clean", body: "Strict on authored code. Vendored registry code is linted leniently.", time: "2m", icon: chip("ES") },
 ];
@@ -53,7 +53,7 @@ export function PlateMap() {
   return (
     <section className="section-pad bg-muted/60">
       <Container>
-        <PlateLabel n="06–07" name="Section map & verification" rule="Every section gets a job, a component and one motion idea. Then it gets checked." />
+        <PlateLabel n="10" name="Section map & verification" rule="Every section gets a job, a component and one motion idea. Then it gets checked." />
         <div className="mt-14 grid grid-cols-1 gap-14 lg:grid-cols-12">
           <div className="min-w-0 lg:col-span-7">
             <MaskedLines

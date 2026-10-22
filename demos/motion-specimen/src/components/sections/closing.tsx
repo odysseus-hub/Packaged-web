@@ -1,5 +1,6 @@
 "use client";
 
+import { motion, stagger } from "motion/react";
 import ParticleButton from "@/components/kokonutui/particle-button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Magnetic } from "@/components/motion/hover";
@@ -32,7 +33,7 @@ export function Faq() {
     <section className="section-pad">
       <Container className="grid grid-cols-1 gap-12 lg:grid-cols-12">
         <div className="lg:col-span-4">
-          <PlateLabel n="10" name="Questions" />
+          <PlateLabel n="12" name="Questions" />
           <h2 className="mt-8 font-display text-[clamp(2.25rem,4vw,3.5rem)] font-extrabold leading-[0.95] tracking-[-0.04em]">
             Printer&apos;s notes.
           </h2>
@@ -63,7 +64,7 @@ export function Install() {
     <section id="install" className="section-pad relative overflow-hidden bg-brand text-brand-foreground">
       <Container>
         <div className="flex flex-wrap items-baseline gap-x-4 border-t border-brand-foreground/30 pt-4 font-mono text-[11px] uppercase tracking-[0.18em] text-brand-foreground/80">
-          <span>Plate 11</span>
+          <span>Plate 13</span>
           <span className="text-brand-foreground">Install</span>
         </div>
         <MaskedLines
@@ -117,12 +118,25 @@ export function Footer() {
           <p className="mt-2 normal-case tracking-normal">Next.js 16 · Tailwind 4 · shadcn/ui · Motion · Kokonut UI · Bklit UI</p>
         </div>
       </Container>
-      <p
+      <motion.p
         aria-hidden
-        className="mt-16 select-none whitespace-nowrap text-center font-display text-[24vw] font-extrabold leading-[0.72] tracking-[-0.07em] text-foreground"
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.4 }}
+        variants={{ hidden: {}, show: { transition: { delayChildren: stagger(0.04) } } }}
+        className="mt-16 flex select-none justify-center whitespace-nowrap font-display text-[24vw] font-extrabold leading-[0.72] tracking-[-0.05em] text-foreground"
       >
-        Specimen<span className="text-brand">.</span>
-      </p>
+        {[..."Specimen."].map((ch, i) => (
+          <motion.span
+            key={i}
+            className={ch === "." ? "inline-block text-brand" : "inline-block"}
+            variants={{ hidden: { y: "60%", opacity: 0 }, show: { y: "0%", opacity: 1, transition: { type: "spring", stiffness: 260, damping: 20 } } }}
+            whileHover={{ y: "-12%", transition: { type: "spring", stiffness: 500, damping: 12 } }}
+          >
+            {ch}
+          </motion.span>
+        ))}
+      </motion.p>
     </footer>
   );
 }
