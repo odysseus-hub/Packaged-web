@@ -1,0 +1,7 @@
+interface:
+  display_name: "Premium Site"
+  short_description: "Award-level animated marketing sites: Next.js, Tailwind, shadcn/ui, Motion, Kokonut UI, Bklit charts, shader heroes and scroll-pinned 3D products."
+  brand_color: "#EB5116"
+  default_prompt: "Use the premium-site skill to art-direct and build an animated marketing site."
+policy:
+  allow_implicit_invocation: true
