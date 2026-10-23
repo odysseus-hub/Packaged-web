@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openai.local/orchestrate-analytics-engagement/expert-handoff.schema.json",
+  "title": "Expert handoff",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "expert_id",
+    "creator_agent_id",
+    "role_contract_id",
+    "protocol_id",
+    "status",
+    "question_addressed",
+    "data_copy",
+    "methods_used",
+    "unique_procedure_steps",
+    "unique_outputs",
+    "metric_definitions",
+    "frozen_evaluation_contract_followed",
+    "files_created",
+    "key_evidence",
+    "findings",
+    "confidence",
+    "limitations",
+    "unresolved_questions",
+    "rejected_approaches",
+    "recommended_next_workstream",
+    "independent_first_pass_completed_at",
+    "other_workstreams_read_before_handoff"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "expert_id": {"type": "string"},
+    "creator_agent_id": {"type": "string"},
+    "role_contract_id": {"type": "string"},
+    "protocol_id": {"type": "string"},
+    "status": {"enum": ["complete", "partial", "blocked"]},
+    "question_addressed": {"type": "string"},
+    "data_copy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["manifest_path", "manifest_version", "verified_checksums", "exceptions"],
+      "properties": {
+        "manifest_path": {"type": "string"},
+        "manifest_version": {"type": ["integer", "string"]},
+        "verified_checksums": {"type": "boolean"},
+        "exceptions": {"type": "array"}
+      }
+    },
+    "methods_used": {"type": "array", "items": {"type": "string"}},
+    "unique_procedure_steps": {"type": "array", "items": {"type": "string"}},
+    "unique_outputs": {"type": "array", "items": {"type": "string"}},
+    "metric_definitions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "formula", "convention"],
+        "properties": {
+          "id": {"type": "string"},
+          "formula": {"type": "string"},
+          "convention": {"type": "string"}
+        }
+      }
+    },
+    "frozen_evaluation_contract_followed": {"type": "boolean"},
+    "files_created": {"type": "array", "items": {"type": "string"}},
+    "key_evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["claim", "artifact", "location"],
+        "properties": {
+          "claim": {"type": "string"},
+          "artifact": {"type": "string"},
+          "location": {"type": "string"}
+        }
+      }
+    },
+    "findings": {"type": "array", "items": {"type": "string"}},
+    "confidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["level", "basis"],
+      "properties": {
+        "level": {"enum": ["low", "medium", "high"]},
+        "basis": {"type": "string"}
+      }
+    },
+    "limitations": {"type": "array", "items": {"type": "string"}},
+    "unresolved_questions": {"type": "array", "items": {"type": "string"}},
+    "rejected_approaches": {"type": "array", "items": {"type": "string"}},
+    "recommended_next_workstream": {"type": "string"},
+    "independent_first_pass_completed_at": {"type": "string"},
+    "other_workstreams_read_before_handoff": {"type": "array", "items": {"type": "string"}}
+  }
+}

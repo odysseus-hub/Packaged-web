@@ -1,0 +1,4 @@
+interface:
+  display_name: "Orchestrate Analytics Engagement"
+  short_description: "Run rigorous multi-expert analytical engagements"
+  default_prompt: "Use $orchestrate-analytics-engagement to analyze this project with the smallest justified expert team and independently validate the result."

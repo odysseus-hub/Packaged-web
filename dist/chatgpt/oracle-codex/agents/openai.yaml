@@ -1,0 +1,4 @@
+interface:
+  display_name: "Oracle"
+  short_description: "Exhaustive, citation-verified web research"
+  default_prompt: "Use $oracle to thoroughly research this question, challenge the leading answer, and verify every cited claim."
